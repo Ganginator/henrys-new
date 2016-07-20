@@ -19,7 +19,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "Number of Products",
 			"param_name"	=> "per_page",
-			"value"			=> "4",
 		),
 		
 		array(
@@ -29,7 +28,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "Columns",
 			"param_name"	=> "columns",
-			"value"			=> "4",
 		),
    )
    

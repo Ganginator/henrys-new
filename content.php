@@ -1,5 +1,5 @@
 <?php
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 ?>
 
 <div class="intro-effect-fadeout">
@@ -49,7 +49,7 @@
             <div class="xxlarge-6 xlarge-8 large-12 large-centered columns">
                 <div class="title">
                     <h1 class="entry-title"><?php the_title(); ?></h1>
-                    <div class="post_meta"> <?php houseofcoffee_entry_meta(); ?></div>
+                    <div class="post_meta"> <?php shopkeeper_entry_meta(); ?></div>
                 </div>
             </div>
         </div>	
@@ -61,7 +61,7 @@
 	
     <div class="row">
         
-		<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+		<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
 		<div class="xxlarge-8 xlarge-10 large-12 large-centered columns with-sidebar">
 		<?php else : ?>
 		<div class="xxlarge-6 xlarge-8 large-10 large-centered columns without-sidebar">
@@ -69,22 +69,22 @@
 		
 			<div class="row">
 			
-				<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+				<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
 				<div class="large-9 columns">
 				<?php else : ?>
 				<div class="large-12 columns">
 				<?php endif; ?>
 					
 					<div class="entry-content blog-single">
-						<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'houseofcoffee' ) ); ?>
-						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'houseofcoffee' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+						<?php the_content( __( 'Continue Reading <span class="meta-nav">&rarr;</span>', 'shopkeeper' ) ); ?>
+						<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'shopkeeper' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
 					</div><!-- .entry-content -->
 				
 					<?php if ( is_single() ) : ?>
 					
 					<footer class="entry-meta">
 						
-						<div class="post_tags"> <?php houseofcoffee_entry_tags(); ?></div>
+						<div class="post_tags"> <?php shopkeeper_entry_tags(); ?></div>
 						
 					</footer><!-- .entry-meta -->
 					
@@ -92,7 +92,7 @@
 					
 				</div><!-- .columns-->
 						
-				<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+				<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
 				<div class="large-3 columns">
 					<?php get_sidebar(); ?>
 				</div><!-- .columns-->

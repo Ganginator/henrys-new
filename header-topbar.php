@@ -1,10 +1,10 @@
 <?php
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 ?>
 
 <div id="site-top-bar">
 
-	<?php if ( (isset($houseofcoffee_theme_options['header_width'])) && ($houseofcoffee_theme_options['header_width'] == "custom") ) : ?>
+	<?php if ( (isset($shopkeeper_theme_options['header_width'])) && ($shopkeeper_theme_options['header_width'] == "custom") ) : ?>
     <div class="row">		
         <div class="large-12 columns">
     <?php endif; ?>
@@ -39,9 +39,9 @@
 				
 			</div><!--.language-and-currency-->
             
-            <div class="site-top-message"><?php if ( isset($houseofcoffee_theme_options['top_bar_text']) ) _e( $houseofcoffee_theme_options['top_bar_text'], 'houseofcoffee' ); ?></div> 
+            <div class="site-top-message"><?php if ( isset($shopkeeper_theme_options['top_bar_text']) ) _e( $shopkeeper_theme_options['top_bar_text'], 'shopkeeper' ); ?></div> 
             
-            <?php if ( (isset($houseofcoffee_theme_options['top_bar_social_icons'])) && ($houseofcoffee_theme_options['top_bar_social_icons'] == "1") ) : ?>
+            <?php if ( (isset($shopkeeper_theme_options['top_bar_social_icons'])) && ($shopkeeper_theme_options['top_bar_social_icons'] == "1") ) : ?>
             
             <div class="site-social-icons-wrapper">
                 <div class="site-social-icons">
@@ -49,24 +49,25 @@
                                         
                         <?php
                         
-                        if ( isset ($houseofcoffee_theme_options['facebook_link']) ) $facebook = $houseofcoffee_theme_options['facebook_link'];
-                        if ( isset ($houseofcoffee_theme_options['pinterest_link']) ) $pinterest = $houseofcoffee_theme_options['pinterest_link'];
-                        if ( isset ($houseofcoffee_theme_options['linkedin_link']) ) $linkedin = $houseofcoffee_theme_options['linkedin_link'];
-                        if ( isset ($houseofcoffee_theme_options['twitter_link']) ) $twitter = $houseofcoffee_theme_options['twitter_link'];
-                        if ( isset ($houseofcoffee_theme_options['googleplus_link']) ) $googleplus = $houseofcoffee_theme_options['googleplus_link'];
-                        if ( isset ($houseofcoffee_theme_options['rss_link']) ) $rss = $houseofcoffee_theme_options['rss_link'];
-                        if ( isset ($houseofcoffee_theme_options['tumblr_link']) ) $tumblr = $houseofcoffee_theme_options['tumblr_link'];
-                        if ( isset ($houseofcoffee_theme_options['instagram_link']) ) $instagram = $houseofcoffee_theme_options['instagram_link'];
-                        if ( isset ($houseofcoffee_theme_options['youtube_link']) ) $youtube = $houseofcoffee_theme_options['youtube_link'];
-                        if ( isset ($houseofcoffee_theme_options['vimeo_link']) ) $vimeo = $houseofcoffee_theme_options['vimeo_link'];
-                        if ( isset ($houseofcoffee_theme_options['behance_link']) ) $behance = $houseofcoffee_theme_options['behance_link'];
-                        if ( isset ($houseofcoffee_theme_options['dribble_link']) ) $dribble = $houseofcoffee_theme_options['dribble_link'];
-                        if ( isset ($houseofcoffee_theme_options['flickr_link']) ) $flickr = $houseofcoffee_theme_options['flickr_link'];
-                        if ( isset ($houseofcoffee_theme_options['git_link']) ) $git = $houseofcoffee_theme_options['git_link'];
-                        if ( isset ($houseofcoffee_theme_options['skype_link']) ) $skype = $houseofcoffee_theme_options['skype_link'];
-                        if ( isset ($houseofcoffee_theme_options['weibo_link']) ) $weibo = $houseofcoffee_theme_options['weibo_link'];
-                        if ( isset ($houseofcoffee_theme_options['foursquare_link']) ) $foursquare = $houseofcoffee_theme_options['foursquare_link'];
-                        if ( isset ($houseofcoffee_theme_options['soundcloud_link']) ) $soundcloud = $houseofcoffee_theme_options['soundcloud_link'];
+                        if ( isset ($shopkeeper_theme_options['facebook_link']) ) $facebook = $shopkeeper_theme_options['facebook_link'];
+                        if ( isset ($shopkeeper_theme_options['pinterest_link']) ) $pinterest = $shopkeeper_theme_options['pinterest_link'];
+                        if ( isset ($shopkeeper_theme_options['linkedin_link']) ) $linkedin = $shopkeeper_theme_options['linkedin_link'];
+                        if ( isset ($shopkeeper_theme_options['twitter_link']) ) $twitter = $shopkeeper_theme_options['twitter_link'];
+                        if ( isset ($shopkeeper_theme_options['googleplus_link']) ) $googleplus = $shopkeeper_theme_options['googleplus_link'];
+                        if ( isset ($shopkeeper_theme_options['rss_link']) ) $rss = $shopkeeper_theme_options['rss_link'];
+                        if ( isset ($shopkeeper_theme_options['tumblr_link']) ) $tumblr = $shopkeeper_theme_options['tumblr_link'];
+                        if ( isset ($shopkeeper_theme_options['instagram_link']) ) $instagram = $shopkeeper_theme_options['instagram_link'];
+                        if ( isset ($shopkeeper_theme_options['youtube_link']) ) $youtube = $shopkeeper_theme_options['youtube_link'];
+                        if ( isset ($shopkeeper_theme_options['vimeo_link']) ) $vimeo = $shopkeeper_theme_options['vimeo_link'];
+                        if ( isset ($shopkeeper_theme_options['behance_link']) ) $behance = $shopkeeper_theme_options['behance_link'];
+                        if ( isset ($shopkeeper_theme_options['dribble_link']) ) $dribble = $shopkeeper_theme_options['dribble_link'];
+                        if ( isset ($shopkeeper_theme_options['flickr_link']) ) $flickr = $shopkeeper_theme_options['flickr_link'];
+                        if ( isset ($shopkeeper_theme_options['git_link']) ) $git = $shopkeeper_theme_options['git_link'];
+                        if ( isset ($shopkeeper_theme_options['skype_link']) ) $skype = $shopkeeper_theme_options['skype_link'];
+                        if ( isset ($shopkeeper_theme_options['weibo_link']) ) $weibo = $shopkeeper_theme_options['weibo_link'];
+                        if ( isset ($shopkeeper_theme_options['foursquare_link']) ) $foursquare = $shopkeeper_theme_options['foursquare_link'];
+                        if ( isset ($shopkeeper_theme_options['soundcloud_link']) ) $soundcloud = $shopkeeper_theme_options['soundcloud_link'];
+                        if ( isset ($shopkeeper_theme_options['vk_link']) ) $vk = $shopkeeper_theme_options['vk_link'];
                         
                         if ( $facebook ) echo('<li><a href="' . $facebook . '" target="_blank" class="social_media"><i class="fa fa-facebook"></i></a></li>' );
                         if ( $pinterest ) echo('<li><a href="' . $pinterest . '" target="_blank" class="social_media"><i class="fa fa-pinterest"></i></a></li>' );
@@ -86,6 +87,7 @@
                         if ( $weibo ) echo('<li><a href="' . $weibo . '" target="_blank" class="social_media"><i class="fa fa-weibo"></i></a></li>' );
                         if ( $foursquare ) echo('<li><a href="' . $foursquare . '" target="_blank" class="social_media"><i class="fa fa-foursquare"></i></a></li>' );
                         if ( $soundcloud ) echo('<li><a href="' . $soundcloud . '" target="_blank" class="social_media"><i class="fa fa-soundcloud"></i></a></li>' );
+                        if ( $vk ) echo('<li><a href="' . $vk . '" target="_blank" class="social_media"><i class="fa fa-vk"></i></a></li>' );
                         
                         ?>
                     
@@ -106,13 +108,13 @@
                 ?>
                 
                 <?php if ( is_user_logged_in() ) { ?>
-                    <ul><li><a href="<?php echo get_site_url(); ?>/?<?php echo get_option('woocommerce_logout_endpoint'); ?>=true" class="logout_link"><?php _e('Logout', 'houseofcoffee'); ?></a></li></ul>
+                    <ul><li><a href="<?php echo get_site_url(); ?>/?<?php echo get_option('woocommerce_logout_endpoint'); ?>=true" class="logout_link"><?php _e('Logout', 'shopkeeper'); ?></a></li></ul>
                 <?php } ?>          
             </nav><!-- #site-navigation -->
             
         </div><!-- .site-top-bar-inner -->
     
-    <?php if ( (isset($houseofcoffee_theme_options['header_width'])) && ($houseofcoffee_theme_options['header_width'] == "custom") ) : ?>
+    <?php if ( (isset($shopkeeper_theme_options['header_width'])) && ($shopkeeper_theme_options['header_width'] == "custom") ) : ?>
         </div><!-- .columns -->
     </div><!-- .row -->
     <?php endif; ?>

@@ -47,7 +47,7 @@ if ( $attachment_ids ) {
                 
                     foreach ( $attachment_ids as $attachment_id ) {
             
-                        $image_link = wp_get_attachment_url( $attachment_id );
+                        $image_link = wp_get_attachment_url( $attachment_id, 'thumbnail' );
             
                         if ( ! $image_link )
                             continue;

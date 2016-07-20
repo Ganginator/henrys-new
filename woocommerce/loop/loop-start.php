@@ -7,7 +7,7 @@
  * @version     2.0.0
  */
  
-global $woocommerce_loop, $houseofcoffee_theme_options;
+global $woocommerce_loop, $shopkeeper_theme_options;
 ?>
 
 <?php
@@ -19,10 +19,10 @@ $products_per_column_medium = 3;
 if ( ( isset($woocommerce_loop['columns']) && $woocommerce_loop['columns'] != "" ) ) {
 	$products_per_column = $woocommerce_loop['columns'];
 } else {
-	if ( ( !isset($houseofcoffee_theme_options['products_per_column']) ) ) {
+	if ( ( !isset($shopkeeper_theme_options['products_per_column']) ) ) {
 		$products_per_column = 4;
 	} else {
-		$products_per_column = $houseofcoffee_theme_options['products_per_column'];
+		$products_per_column = $shopkeeper_theme_options['products_per_column'];
 		
         if (isset($_GET["products_per_row"])) $products_per_column = $_GET["products_per_row"];
 	}

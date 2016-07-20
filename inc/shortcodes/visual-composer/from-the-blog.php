@@ -45,7 +45,6 @@ vc_map(array(
 			"admin_label" => true,
 			"heading" => "Number of Posts",
 			"param_name" => "posts",
-			"value" => "9",
 			"description" => "Number of posts to be displayed in the slider."
 		),
 		

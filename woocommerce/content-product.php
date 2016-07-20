@@ -1,17 +1,29 @@
 <?php
 /**
- * The template for displaying product content within loops.
+ * The template for displaying product content within loops
  *
- * Override this template by copying it to yourtheme/woocommerce/content-product.php
+ * This template can be overridden by copying it to yourtheme/woocommerce/content-product.php.
  *
+ * HOWEVER, on occasion WooCommerce will need to update template files and you
+ * (the theme developer) will need to copy the new files to your theme to
+ * maintain compatibility. We try to do this as little as possible, but it does
+ * happen. When this occurs the version of the template file will be bumped and
+ * the readme will list any important changes.
+ *
+ * @see     https://docs.woothemes.com/document/template-structure/
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     1.6.4
+ * @version 2.6.1
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
-global $product, $woocommerce_loop, $houseofcoffee_theme_options;
+global $product, $shopkeeper_theme_options;
+
+//woocommerce_before_shop_loop_item
+remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 
 //woocommerce_after_shop_loop_item_title
 remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
@@ -24,34 +36,16 @@ add_action( 'woocommerce_after_shop_loop_item_title_loop_rating', 'woocommerce_t
 remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
 
-// Store loop count we're currently on
-if ( empty( $woocommerce_loop['loop'] ) )
-	$woocommerce_loop['loop'] = 0;
-
-// Store column count for displaying the grid
-if ( empty( $woocommerce_loop['columns'] ) )
-	$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
-
 // Ensure visibility
-if ( ! $product || ! $product->is_visible() )
+if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
-
-// Increase loop count
-$woocommerce_loop['loop']++;
-
-// Extra post classes
-$classes = array();
-if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 == $woocommerce_loop['columns'] )
-	$classes[] = 'first';
-if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
-	$classes[] = 'last';
+}
 ?>
 
-<li class="<?php if ( (isset($houseofcoffee_theme_options['catalog_mode'])) && ($houseofcoffee_theme_options['catalog_mode'] == 1) ) : ?>catalog_mode<?php endif; ?>">
+<li class="<?php if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 1) ) : ?>catalog_mode<?php endif;
+				 if ( !$shopkeeper_theme_options['add_to_cart_display']) echo 'display_buttons' ?>">
    
-	<?php do_action( 'woocommerce_before_shop_loop_item' ); ?>
-
-	
+	<?php do_action( 'woocommerce_before_shop_loop_item' ); ?>	
 
 		<?php
 			$attachment_ids = $product->get_gallery_attachment_ids();
@@ -78,7 +72,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			$class = 'with_second_image';     
 		}
 		
-		if ( (isset($houseofcoffee_theme_options['second_image_product_listing'])) && ($houseofcoffee_theme_options['second_image_product_listing'] == "0" ) ) {
+		if ( (isset($shopkeeper_theme_options['second_image_product_listing'])) && ($shopkeeper_theme_options['second_image_product_listing'] == "0" ) ) {
 			$style = '';
 			$class = '';
 		}
@@ -100,19 +94,11 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 				</a>
 			</div><!--.product_thumbnail-->
 			
-			<?php if($roast_level = get_field( 'roast_level' )): ?>
-				<?php if($roast_level != 'none'): ?>
-				<div class="roast <?php echo $roast_level; ?>">
-					<p><?php echo $roast_level; ?></p>
-				</div>
-				<?php endif; ?>
-			<?php endif; ?>
-			
-			<?php if ( (isset($houseofcoffee_theme_options['catalog_mode'])) && ($houseofcoffee_theme_options['catalog_mode'] == 0) ) : ?>
+			<?php if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 0) ) : ?>
 				<?php wc_get_template( 'loop/sale-flash.php' ); ?>
             <?php endif; ?>
 			
-			<?php if ( (isset($houseofcoffee_theme_options['catalog_mode'])) && ($houseofcoffee_theme_options['catalog_mode'] == 0) ) : ?>
+			<?php if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 0) ) : ?>
 				<?php if ( !$product->is_in_stock() ) : ?>            
                     <div class="out_of_stock_badge_loop"><?php _e( 'Out of stock', 'woocommerce' ); ?></div>            
                 <?php endif; ?>
@@ -121,39 +107,41 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			<?php if (class_exists('YITH_WCWL')) : ?>
 			<?php echo do_shortcode('[yith_wcwl_add_to_wishlist]'); ?>
             <?php endif; ?>
+
+            <?php do_action( 'woocommerce_after_shop_loop_item_title' ); ?>
 			
 		</div><!--.product_thumbnail_wrapper-->
 				
 		<h3><a class="product-title-link" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		
-		<?php if($word_descriptors = get_post_meta( $post->ID, 'Word Descriptors', TRUE )): ?>
-			<div class="word-descriptors">
-				<p><?php echo $word_descriptors; ?></p>
-			</div>
-		<?php endif; ?>
-		
-        <?php if ( (isset($houseofcoffee_theme_options['ratings_catalog_page'])) && ($houseofcoffee_theme_options['ratings_catalog_page'] == "1" ) ) : ?>
+        <?php if ( (isset($shopkeeper_theme_options['ratings_catalog_page'])) && ($shopkeeper_theme_options['ratings_catalog_page'] == "1" ) ) : ?>
         <div class="archive-product-rating">
 			<?php do_action( 'woocommerce_after_shop_loop_item_title_loop_rating' ); ?>
 		</div>
         <?php endif; ?>
+
+       
 	
-	<div class="product_after_shop_loop">
-		
-		<?php do_action( 'woocommerce_after_shop_loop_item_title' ); ?>
-		
-		<div class="product_after_shop_loop_switcher">
-			
-			<div class="product_after_shop_loop_price">
-				<?php do_action( 'woocommerce_after_shop_loop_item_title_loop_price' ); ?>
+			<div class="product_after_shop_loop">
+				
+				<div class="product_after_shop_loop_switcher">
+					
+					<div class="product_after_shop_loop_price">
+						<?php do_action( 'woocommerce_after_shop_loop_item_title_loop_price' ); ?>
+					</div>
+
+					<?php if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 0) ) : ?>
+					
+					<div class="product_after_shop_loop_buttons">
+						<?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
+					</div>
+
+					<?php endif; ?>
+					
+				</div>
+				
 			</div>
-			
-			<div class="product_after_shop_loop_buttons">
-				<?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
-			</div>
-			
-		</div>
+
 		
-	</div>
 	
 </li>

@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 			<div class="create-account">
 
-				<p><?php _e( 'Create an account by entering a password below. Your email will be used for the username. If you are a returning customer please login at the top of the page.', 'woocommerce' ); ?></p>
+				<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'woocommerce' ); ?></p>
 
 				<?php foreach ( $checkout->checkout_fields['account'] as $key => $field ) : ?>
 

@@ -1,6 +1,6 @@
 <?php
 	
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 	
 	$page_id = "";
 	if ( is_single() || is_page() ) {
@@ -10,7 +10,7 @@
 	}
 
     $blog_with_sidebar = "";
-    if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) $blog_with_sidebar = "yes";
+    if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) $blog_with_sidebar = "yes";
     if (isset($_GET["blog_with_sidebar"])) $blog_with_sidebar = $_GET["blog_with_sidebar"];
 
     $page_header_src = "";
@@ -43,7 +43,7 @@
 							if ( (isset($page_title_option)) && ($page_title_option == "on") ) {
 								$blog_page_id = get_option('page_for_posts');
 								echo '<p class="top-page-excerpt">'.get_page($blog_page_id)->post_excerpt.'</p>';
-								echo '<h1 class="page-title blog-listing">'.get_page($blog_page_id)->post_title.'</h1>';
+								echo '<h2 class="page-title blog-listing">'.get_page($blog_page_id)->post_title.'</h2>';
 							}
 						}
 						?>
@@ -85,8 +85,8 @@
 					
 			<div class="row">
 				
-				<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
-				<div class="large-9 columns with-sidebar">
+				<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+				<div class="large-12 columns with-sidebar">
 				<?php else : ?>
 				<div class="xxlarge-10 xlarge-11 large-12 large-centered columns">
 				<?php endif; ?>
@@ -106,28 +106,28 @@
 									<div class="blog-post hidden <?php echo get_post_format(); ?>">
 										<div class="blog-post-inner">
 										
-											<h1 class="entry-title-archive">
-												<a href="<?php echo has_post_format('link') ? esc_url( houseofcoffee_get_link_url() ) : the_permalink() ; ?>" class="thumbnail_archive">
+											<h2 class="entry-title-archive">
+												<a href="<?php echo has_post_format('link') ? esc_url( shopkeeper_get_link_url() ) : the_permalink() ; ?>" class="thumbnail_archive">
 													<span class="thumbnail_archive_container">
 														<?php the_post_thumbnail('blog-isotope'); ?>
 													</span>
 													<span><?php the_title(); ?></span>
 												</a>
-											</h1>
+											</h2>
 													 
-											<div class="post_meta_archive"><?php houseofcoffee_entry_archives(); ?></div>
+											<div class="post_meta_archive"><?php shopkeeper_entry_archives(); ?></div>
 													
 											<div class="entry-content-archive">
 												
 												<?php if (get_option('rss_use_excerpt') == 0) : ?>
-													<?php echo the_content(__('Continue Reading', 'houseofcoffee')); ?>
+													<?php the_content(__('Continue Reading', 'shopkeeper')); ?>
 												<?php elseif (get_option('rss_use_excerpt') == 1) : ?>
-													<?php echo the_excerpt(); ?>
+													<?php the_excerpt(); ?>
 													<a href="<?php the_permalink(); ?>" class="more-link">
-														<?php  echo __('Continue Reading', 'houseofcoffee'); ?>
+														<?php _e('Continue Reading', 'shopkeeper'); ?>
 													</a>
 												<?php else : ?>
-													<?php echo the_content(__('Continue Reading', 'houseofcoffee')); ?>
+													<?php the_content(__('Continue Reading', 'shopkeeper')); ?>
 												<?php endif ?>
 												
 											</div>
@@ -140,17 +140,18 @@
 								
 								
 						</div><!-- .blog-isotope -->
-						<?php houseofcoffee_content_nav( 'nav-below' ); ?>
+						<?php shopkeeper_content_nav( 'nav-below' ); ?>
 					</div><!-- .blog-isotop-container-->
 					
-				</div><!-- .columns-->
-				
-				<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
-				<div class="large-3 columns">
+				<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+				<div class="blog-sidebar">
 					<?php get_sidebar(); ?>
 				</div><!-- .columns-->
 				<?php endif; ?>
+
+				</div><!-- .columns-->
 				
+			
 			</div><!-- .row-->
 				
         <?php else : ?>

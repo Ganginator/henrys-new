@@ -1,7 +1,11 @@
 <?php
 
+// DO NOT MODIFY
+define("THEME_SLUG", 'shopkeeper'); 
+define("THEME_NAME", 'Shopkeeper');
+
 // theme textdomain - must be loaded before redux
-load_theme_textdomain( 'houseofcoffee', get_template_directory() . '/languages' );
+load_theme_textdomain( 'shopkeeper', get_template_directory() . '/languages' );
 
 /******************************************************************************/
 /***************************** Theme Options **********************************/
@@ -10,35 +14,23 @@ load_theme_textdomain( 'houseofcoffee', get_template_directory() . '/languages' 
 if ( !class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/settings/redux/ReduxCore/framework.php' ) ) {
     require_once( dirname( __FILE__ ) . '/settings/redux/ReduxCore/framework.php' );
 }
-if ( !isset( $redux_demo ) && file_exists( dirname( __FILE__ ) . '/settings/houseofcoffee.config.php' ) ) {
-    require_once( dirname( __FILE__ ) . '/settings/houseofcoffee.config.php' );
+if ( !isset( $redux_demo ) && file_exists( dirname( __FILE__ ) . '/settings/shopkeeper.config.php' ) ) {
+    require_once( dirname( __FILE__ ) . '/settings/shopkeeper.config.php' );
 }
 
-global $houseofcoffee_theme_options;
-
-// frontend presets
-if (isset($_GET["preset"])) { 
-	$preset = $_GET["preset"];
-} else {
-	$preset = "";
-}
-
-if ($preset != "") {
-	if ( file_exists( dirname( __FILE__ ) . '/_presets/'.$preset.'.json' ) ) {
-	$theme_options_json = file_get_contents( dirname( __FILE__ ) . '/_presets/'.$preset.'.json' );
-	$houseofcoffee_theme_options = json_decode($theme_options_json, true);
-	}
-}
+global $shopkeeper_theme_options;
 
 
 /******************************************************************************/
 /******************************** Includes ************************************/
 /******************************************************************************/
 
-//if ( is_admin() ) { include_once (TEMPLATEPATH . '/inc/update-notifier.php'); }
+require_once('inc/helpers/helpers.php');
+
+if ( is_admin() ) require_once('backend/index.php'); // Backend
 
 //Include Custom Posts
-include_once('inc/custom-posts/portfolio.php');
+require('inc/custom-posts/portfolio.php');
 
 
 
@@ -73,6 +65,9 @@ include_once('inc/metaboxes/product.php');
 //Custom Menu
 include_once('inc/custom-menu/custom-menu.php');
 
+//Quick View
+include_once('inc/woocommerce/quick_view.php');
+
 
 
 
@@ -80,8 +75,8 @@ include_once('inc/custom-menu/custom-menu.php');
 /************************ Plugin recommendations ******************************/
 /******************************************************************************/
 
-require_once dirname( __FILE__ ) . '/inc/tgm/class-tgm-plugin-activation.php';
-require_once dirname( __FILE__ ) . '/inc/tgm/plugins.php';
+// require_once dirname( __FILE__ ) . '/inc/tgm/class-tgm-plugin-activation-mod1.php';
+// require_once dirname( __FILE__ ) . '/inc/tgm/plugins.php';
 
 
 
@@ -96,11 +91,12 @@ if (class_exists('WPBakeryVisualComposerAbstract')) {
 	add_action( 'init', 'visual_composer_stuff' );
 	function visual_composer_stuff() {
 		
+		//disable update
+		// Vc_Manager::getInstance()->disableUpdater(true);
+
+		
 		//enable vc on post types
 		if(function_exists('vc_set_default_editor_post_types')) vc_set_default_editor_post_types( array('post','page','product','portfolio') );
-		
-		if(function_exists('vc_set_as_theme')) vc_set_as_theme(true);
-		vc_disable_frontend();
 		
 		// Modify and remove existing shortcodes from VC
 		include_once('inc/shortcodes/visual-composer/custom_vc.php');
@@ -143,6 +139,31 @@ if (class_exists('WPBakeryVisualComposerAbstract')) {
 	
 	}
 
+	// Filter to replace default css class names for vc_row shortcode and vc_column
+	/*add_filter( 'vc_shortcodes_css_class', 'custom_css_classes_for_vc_row_and_vc_column', 10, 2 );
+	function custom_css_classes_for_vc_row_and_vc_column( $class_string, $tag ) {
+		
+		if ( $tag == 'vc_row' || $tag == 'vc_row_inner' ) {
+			$class_string = str_replace( 'vc_row-fluid', 'row', $class_string );
+		}
+
+		if ( $tag == 'vc_column' || $tag == 'vc_column_inner' ) {
+			$class_string = preg_replace( '/vc_col-xs-(\d{1,2})/', 'large-$1 columns column_container', $class_string );
+			$class_string = preg_replace( '/vc_col-sm-(\d{1,2})/', 'large-$1 columns column_container', $class_string );
+			$class_string = preg_replace( '/vc_col-md-(\d{1,2})/', 'large-$1 columns column_container', $class_string );
+			$class_string = preg_replace( '/vc_col-lg-(\d{1,2})/', 'large-$1 columns column_container', $class_string );
+		}
+
+		return $class_string;
+
+	}*/
+
+}
+
+add_action( 'vc_before_init', 'shopkeeper_vcSetAsTheme' );
+function shopkeeper_vcSetAsTheme() {
+    vc_manager()->disableUpdater(true);
+	vc_set_as_theme();
 }
 
 
@@ -151,11 +172,11 @@ if (class_exists('WPBakeryVisualComposerAbstract')) {
 /****************************** Ajax url **************************************/
 /******************************************************************************/
 
-add_action('wp_head','houseofcoffee_ajaxurl');
-function houseofcoffee_ajaxurl() {
+add_action('wp_head','shopkeeper_ajaxurl');
+function shopkeeper_ajaxurl() {
 ?>
     <script type="text/javascript">
-        var houseofcoffee_ajaxurl = '<?php echo admin_url('admin-ajax.php', 'relative'); ?>';
+        var shopkeeper_ajaxurl = '<?php echo admin_url('admin-ajax.php', 'relative'); ?>';
     </script>
 <?php
 }
@@ -167,7 +188,7 @@ function houseofcoffee_ajaxurl() {
 function refresh_dynamic_contents() {
 	global $woocommerce, $yith_wcwl;
     $data = array(
-        'cart_count_products' => class_exists('WooCommerce') ? $woocommerce->cart->cart_contents_count : 0,
+        'cart_count_products' => class_exists('WooCommerce') ? WC()->cart->get_cart_contents_count() : 0,
         'wishlist_count_products' => class_exists('YITH_WCWL') ? yith_wcwl_count_products() : 0,
     );
 	wp_send_json($data);
@@ -181,16 +202,31 @@ add_action( 'wp_ajax_nopriv_refresh_dynamic_contents', 'refresh_dynamic_contents
 
 
 /******************************************************************************/
-/*********************** houseofcoffee setup *************************************/
+/*********************** shopkeeper setup *************************************/
 /******************************************************************************/
 
 
-if ( ! function_exists( 'houseofcoffee_setup' ) ) :
-function houseofcoffee_setup() {
+if ( ! function_exists( 'shopkeeper_setup' ) ) :
+function shopkeeper_setup() {
 	
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
+
+	// frontend presets
+	if (isset($_GET["preset"])) { 
+		$preset = $_GET["preset"];
+	} else {
+		$preset = "";
+	}
+
+	if ($preset != "") {
+		if ( file_exists( dirname( __FILE__ ) . '/_presets/'.$preset.'.json' ) ) {
+		$theme_options_json = file_get_contents( dirname( __FILE__ ) . '/_presets/'.$preset.'.json' );
+		$shopkeeper_theme_options = json_decode($theme_options_json, true);
+		}
+	}
 	
 	/** Theme support **/
+	add_theme_support( 'title-tag' );
 	add_theme_support( 'menus' );
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'post-thumbnails' );
@@ -212,130 +248,134 @@ function houseofcoffee_setup() {
 	
 	/** Register menus **/	
 	register_nav_menus( array(
-		'top-bar-navigation' => __( 'Top Bar Navigation', 'houseofcoffee' ),
-		'main-navigation' => __( 'Main Navigation', 'houseofcoffee' ),
-		'footer-navigation' => __( 'Footer Navigation', 'houseofcoffee' ),
+		'top-bar-navigation' => __( 'Top Bar Navigation', 'shopkeeper' ),
+		'main-navigation' => __( 'Main Navigation', 'shopkeeper' ),
+		'footer-navigation' => __( 'Footer Navigation', 'shopkeeper' ),
 	) );
 	
-	if ( (isset($houseofcoffee_theme_options['main_header_off_canvas'])) && (trim($houseofcoffee_theme_options['main_header_off_canvas']) == "1" ) ) {
+	if ( (isset($shopkeeper_theme_options['main_header_off_canvas'])) && (trim($shopkeeper_theme_options['main_header_off_canvas']) == "1" ) ) {
 		register_nav_menus( array(
-			'secondary_navigation' => __( 'Secondary Navigation (Off-Canvas)', 'houseofcoffee' ),
+			'secondary_navigation' => __( 'Secondary Navigation (Off-Canvas)', 'shopkeeper' ),
 		) );
 	}
 	
-	if ( (isset($houseofcoffee_theme_options['main_header_layout'])) && ( $houseofcoffee_theme_options['main_header_layout'] == "2" ) ) {
+	if ( (isset($shopkeeper_theme_options['main_header_layout'])) && ( $shopkeeper_theme_options['main_header_layout'] == "2" ) ) {
 		register_nav_menus( array(
-			'centered_header_left_navigation' => __( 'Centered Header - Left Navigation', 'houseofcoffee' ),
-			'centered_header_right_navigation' => __( 'Centered Header - Right Navigation', 'houseofcoffee' ),
+			'centered_header_left_navigation' => __( 'Centered Header - Left Navigation', 'shopkeeper' ),
+			'centered_header_right_navigation' => __( 'Centered Header - Right Navigation', 'shopkeeper' ),
 		) );
 	}
 	
 	/** WooCommerce Number of products displayed per page **/	
-	if ( (isset($houseofcoffee_theme_options['products_per_page'])) ) {
-		add_filter( 'loop_shop_per_page', create_function( '$cols', 'return ' . $houseofcoffee_theme_options['products_per_page'] . ';' ), 20 );
+	if ( (isset($shopkeeper_theme_options['products_per_page'])) ) {
+		add_filter( 'loop_shop_per_page', create_function( '$cols', 'return ' . $shopkeeper_theme_options['products_per_page'] . ';' ), 20 );
+	}
+
+	/******************************************************************************/
+	/* WooCommerce remove review tab **********************************************/
+	/******************************************************************************/
+	if ( (isset($shopkeeper_theme_options['review_tab'])) && ($shopkeeper_theme_options['review_tab'] == "0" ) ) {
+	add_filter( 'woocommerce_product_tabs', 'shopkeeper_remove_reviews_tab', 98);
+		function shopkeeper_remove_reviews_tab($tabs) {
+			unset($tabs['reviews']);
+			return $tabs;
+		}
 	}
 
 }
-endif; // houseofcoffee_setup
-add_action( 'after_setup_theme', 'houseofcoffee_setup' );
+endif; // shopkeeper_setup
+add_action( 'after_setup_theme', 'shopkeeper_setup' );
 
 /******************************************************************************/
 /**************************** Enqueue styles **********************************/
 /******************************************************************************/
 
 // frontend
-function houseofcoffee_styles() {
+function shopkeeper_styles() {
 	
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 
-	wp_enqueue_style('houseofcoffee-foundation-app', get_template_directory_uri() . '/css/app.css', array(), '5.3.1', 'all' );		
+	wp_enqueue_style('shopkeeper-foundation-app', get_template_directory_uri() . '/css/app.css', array(), '5.3.1', 'all' );		
 	
-	wp_enqueue_style('houseofcoffee-animate', get_template_directory_uri() . '/css/animate.css', array(), '2.0', 'all' );
+	wp_enqueue_style('shopkeeper-animate', get_template_directory_uri() . '/css/animate.css', array(), '2.0', 'all' );
 	
-	wp_enqueue_style('houseofcoffee-font-awesome', get_template_directory_uri() . '/inc/fonts/font-awesome/css/font-awesome.min.css', array(), '4.0.3', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-arrows', get_template_directory_uri() . '/inc/fonts/linea-fonts/arrows/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-basic', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-basic_elaboration', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic_elaboration/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-ecommerce', get_template_directory_uri() . '/inc/fonts/linea-fonts/ecommerce/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-music', get_template_directory_uri() . '/inc/fonts/linea-fonts/music/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-software', get_template_directory_uri() . '/inc/fonts/linea-fonts/software/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-font-linea-weather', get_template_directory_uri() . '/inc/fonts/linea-fonts/weather/styles.css', array(), '1.0', 'all' );	
-	wp_enqueue_style('houseofcoffee-fresco', get_template_directory_uri() . '/css/fresco/fresco.css', array(), '1.3.0', 'all' );
-	wp_enqueue_style('houseofcoffee-idangerous-swiper', get_template_directory_uri() . '/css/idangerous.swiper.css', array(), '2.3', 'all' );
-	wp_enqueue_style('houseofcoffee-owl', get_template_directory_uri() . '/css/owl.carousel.css', array(), '1.3.1', 'all' );
-	wp_enqueue_style('houseofcoffee-owl-theme', get_template_directory_uri() . '/css/owl.theme.css', array(), '1.3.1', 'all' );
-	wp_enqueue_style('houseofcoffee-offcanvas', get_template_directory_uri() . '/css/offcanvas.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-nanoscroller', get_template_directory_uri() . '/css/nanoscroller.css', array(), '0.7.6', 'all' );
-	wp_enqueue_style('houseofcoffee-select2', get_template_directory_uri() . '/css/select2.css', array(), '3.4.5', 'all' );
-	wp_enqueue_style('houseofcoffee-easyzoom', get_template_directory_uri() . '/css/easyzoom.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-defaults', get_template_directory_uri() . '/css/defaults.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-woocommerce-overwrite', get_template_directory_uri() . '/css/woocommerce-overwrite.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-top-bar', get_template_directory_uri() . '/css/header-topbar.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-headers', get_template_directory_uri() . '/css/headers.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-menus', get_template_directory_uri() . '/css/navigations.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-awesome', get_template_directory_uri() . '/inc/fonts/font-awesome/css/font-awesome.min.css', array(), '4.6.3', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-arrows', get_template_directory_uri() . '/inc/fonts/linea-fonts/arrows/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-basic', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-basic_elaboration', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic_elaboration/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-ecommerce', get_template_directory_uri() . '/inc/fonts/linea-fonts/ecommerce/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-music', get_template_directory_uri() . '/inc/fonts/linea-fonts/music/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-software', get_template_directory_uri() . '/inc/fonts/linea-fonts/software/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-font-linea-weather', get_template_directory_uri() . '/inc/fonts/linea-fonts/weather/styles.css', array(), '1.0', 'all' );	
+	wp_enqueue_style('shopkeeper-fresco', get_template_directory_uri() . '/css/fresco/fresco.css', array(), '1.3.0', 'all' );
+	wp_enqueue_style('shopkeeper-idangerous-swiper', get_template_directory_uri() . '/css/swiper.min.css', array(), '3.3.1', 'all' );
+	wp_enqueue_style('shopkeeper-owl', get_template_directory_uri() . '/css/owl.carousel.css', array(), '1.3.1', 'all' );
+	wp_enqueue_style('shopkeeper-owl-theme', get_template_directory_uri() . '/css/owl.theme.css', array(), '1.3.1', 'all' );
+	wp_enqueue_style('shopkeeper-offcanvas', get_template_directory_uri() . '/css/offcanvas.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-nanoscroller', get_template_directory_uri() . '/css/nanoscroller.css', array(), '0.7.6', 'all' );
+	wp_enqueue_style('shopkeeper-select2', get_template_directory_uri() . '/css/select2.css', array(), '3.4.5', 'all' );
+	wp_enqueue_style('shopkeeper-easyzoom', get_template_directory_uri() . '/css/easyzoom.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-defaults', get_template_directory_uri() . '/css/defaults.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-woocommerce-overwrite', get_template_directory_uri() . '/css/woocommerce-overwrite.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-top-bar', get_template_directory_uri() . '/css/header-topbar.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-headers', get_template_directory_uri() . '/css/headers.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-menus', get_template_directory_uri() . '/css/navigations.css', array(), '1.0', 'all' );
 	
-	if ( isset($houseofcoffee_theme_options['main_header_layout']) ) {		
-		if ( $houseofcoffee_theme_options['main_header_layout'] == "1" ) {
-			wp_enqueue_style('houseofcoffee-header-default', get_template_directory_uri() . '/css/header-default.css', array(), '1.0', 'all' );
+	if ( isset($shopkeeper_theme_options['main_header_layout']) ) {		
+		if ( $shopkeeper_theme_options['main_header_layout'] == "1" ) {
+			wp_enqueue_style('shopkeeper-header-default', get_template_directory_uri() . '/css/header-default.css', array(), '1.0', 'all' );
 		} 		
-		elseif ( $houseofcoffee_theme_options['main_header_layout'] == "2" ) {
-			wp_enqueue_style('houseofcoffee-header-centered-2menus', get_template_directory_uri() . '/css/header-centered-2menus.css', array(), '1.0', 'all' );
+		elseif ( $shopkeeper_theme_options['main_header_layout'] == "2" ) {
+			wp_enqueue_style('shopkeeper-header-centered-2menus', get_template_directory_uri() . '/css/header-centered-2menus.css', array(), '1.0', 'all' );
 		}
-		elseif ( $houseofcoffee_theme_options['main_header_layout'] == "3" ) {
-			wp_enqueue_style('houseofcoffee-header-centered-menu-under', get_template_directory_uri() . '/css/header-centered-menu-under.css', array(), '1.0', 'all' );
+		elseif ( $shopkeeper_theme_options['main_header_layout'] == "3" ) {
+			wp_enqueue_style('shopkeeper-header-centered-menu-under', get_template_directory_uri() . '/css/header-centered-menu-under.css', array(), '1.0', 'all' );
 		} 		
 	}		
 	else {	
-		wp_enqueue_style('houseofcoffee-header-default', get_template_directory_uri() . '/css/header-default.css', array(), '1.0', 'all' );	
+		wp_enqueue_style('shopkeeper-header-default', get_template_directory_uri() . '/css/header-default.css', array(), '1.0', 'all' );	
 	}
 	
-	if (isset($houseofcoffee_theme_options['font_source']) && ($houseofcoffee_theme_options['font_source'] == "2")) {
-		if ( (isset($houseofcoffee_theme_options['font_google_code'])) && ($houseofcoffee_theme_options['font_google_code'] != "") ) {
-			wp_enqueue_style('houseofcoffee-font_google_code', $houseofcoffee_theme_options['font_google_code'], array(), '1.0', 'all' );
+	if (isset($shopkeeper_theme_options['font_source']) && ($shopkeeper_theme_options['font_source'] == "2")) {
+		if ( (isset($shopkeeper_theme_options['font_google_code'])) && ($shopkeeper_theme_options['font_google_code'] != "") ) {
+			wp_enqueue_style('shopkeeper-font_google_code', $shopkeeper_theme_options['font_google_code'], array(), '1.0', 'all' );
 		}
 	}
 	
-	wp_enqueue_style('houseofcoffee-styles', get_template_directory_uri() . '/css/styles.css', array(), '1.0', 'all' );
-	wp_enqueue_style('houseofcoffee-responsive', get_template_directory_uri() . '/css/responsive.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-styles', get_template_directory_uri() . '/css/styles.css', array(), '1.0', 'all' );
+	wp_enqueue_style('shopkeeper-responsive', get_template_directory_uri() . '/css/responsive.css', array(), '1.0', 'all' );
 
-	wp_enqueue_style('houseofcoffee-default-style', get_stylesheet_uri());
+	wp_enqueue_style('shopkeeper-default-style', get_stylesheet_uri());
 
 }
-add_action( 'wp_enqueue_scripts', 'houseofcoffee_styles', 99 );
+add_action( 'wp_enqueue_scripts', 'shopkeeper_styles', 99 );
 
 
 
 // admin area
-function houseofcoffee_admin_styles() {
+function shopkeeper_admin_styles() {
     if ( is_admin() ) {
         
 		wp_enqueue_style("wp-color-picker");
-		wp_enqueue_style("houseofcoffee_admin_styles", get_template_directory_uri() . "/css/wp-admin-custom.css", false, "1.0", "all");
+		wp_enqueue_style("shopkeeper_admin_styles", get_template_directory_uri() . "/css/wp-admin-custom.css", false, "1.0", "all");
 		
 		if (class_exists('WPBakeryVisualComposerAbstract')) { 
-			wp_enqueue_style('houseofcoffee_visual_composer', get_template_directory_uri() .'/css/visual-composer.css', false, "1.0", 'all');
-			wp_enqueue_style('houseofcoffee-font-linea-arrows', get_template_directory_uri() . '/inc/fonts/linea-fonts/arrows/styles.css', false, '1.0', 'all' );
-			wp_enqueue_style('houseofcoffee-font-linea-basic', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic/styles.css', false, '1.0', 'all' );
-			wp_enqueue_style('houseofcoffee-font-linea-basic_elaboration', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic_elaboration/styles.css', false, '1.0', 'all' );
-			wp_enqueue_style('houseofcoffee-font-linea-ecommerce', get_template_directory_uri() . '/inc/fonts/linea-fonts/ecommerce/styles.css', false, '1.0', 'all' );
-			wp_enqueue_style('houseofcoffee-font-linea-music', get_template_directory_uri() . '/inc/fonts/linea-fonts/music/styles.css', false, '1.0', 'all' );
-			wp_enqueue_style('houseofcoffee-font-linea-software', get_template_directory_uri() . '/inc/fonts/linea-fonts/software/styles.css', false, '1.0', 'all' );
-			wp_enqueue_style('houseofcoffee-font-linea-weather', get_template_directory_uri() . '/inc/fonts/linea-fonts/weather/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper_visual_composer', get_template_directory_uri() .'/css/visual-composer.css', false, "1.0", 'all');
+			wp_enqueue_style('shopkeeper-font-linea-arrows', get_template_directory_uri() . '/inc/fonts/linea-fonts/arrows/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper-font-linea-basic', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper-font-linea-basic_elaboration', get_template_directory_uri() . '/inc/fonts/linea-fonts/basic_elaboration/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper-font-linea-ecommerce', get_template_directory_uri() . '/inc/fonts/linea-fonts/ecommerce/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper-font-linea-music', get_template_directory_uri() . '/inc/fonts/linea-fonts/music/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper-font-linea-software', get_template_directory_uri() . '/inc/fonts/linea-fonts/software/styles.css', false, '1.0', 'all' );
+			wp_enqueue_style('shopkeeper-font-linea-weather', get_template_directory_uri() . '/inc/fonts/linea-fonts/weather/styles.css', false, '1.0', 'all' );
 		}
     }
 }
-add_action( 'admin_enqueue_scripts', 'houseofcoffee_admin_styles' );
+add_action( 'admin_enqueue_scripts', 'shopkeeper_admin_styles' );
 
 
 
-add_filter( 'woocommerce_product_tabs', 'woo_rename_tabs', 98 );
-function woo_rename_tabs( $tabs ) {
 
-	$tabs['description']['title'] = __( 'Did You Know' );		// Rename the description tab
-
-	return $tabs;
-
-}
 
 
 
@@ -344,60 +384,60 @@ function woo_rename_tabs( $tabs ) {
 /******************************************************************************/
 
 // frontend
-function houseofcoffee_scripts() {
+function shopkeeper_scripts() {
 	
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 	
 	/** In Header **/
 	
-	wp_enqueue_script('houseofcoffee-google-maps', 'https://maps.googleapis.com/maps/api/js?sensor=false', array(), '1.0', FALSE);
+	// wp_enqueue_script('shopkeeper-google-maps', 'https://maps.googleapis.com/maps/api/js', array(), '1.0', FALSE);
 	
-	if (isset($houseofcoffee_theme_options['font_source']) && ($houseofcoffee_theme_options['font_source'] == "3")) {
-		if ( (isset($houseofcoffee_theme_options['font_typekit_kit_id'])) && ($houseofcoffee_theme_options['font_typekit_kit_id'] != "") ) {
-			wp_enqueue_script('houseofcoffee-font_typekit', '//use.typekit.net/'.$houseofcoffee_theme_options['font_typekit_kit_id'].'.js', array(), NULL, FALSE );
-			wp_enqueue_script('houseofcoffee-font_typekit_exec', get_template_directory_uri() . '/js/typekit.js', array(), NULL, FALSE );
+	if (isset($shopkeeper_theme_options['font_source']) && ($shopkeeper_theme_options['font_source'] == "3")) {
+		if ( (isset($shopkeeper_theme_options['font_typekit_kit_id'])) && ($shopkeeper_theme_options['font_typekit_kit_id'] != "") ) {
+			wp_enqueue_script('shopkeeper-font_typekit', '//use.typekit.net/'.$shopkeeper_theme_options['font_typekit_kit_id'].'.js', array(), NULL, FALSE );
+			wp_enqueue_script('shopkeeper-font_typekit_exec', get_template_directory_uri() . '/js/typekit.js', array(), NULL, FALSE );
 		}
 	}	
 	
 	/** In Footer **/
 	
-	wp_enqueue_script('houseofcoffee-touchswipe', get_template_directory_uri() . '/js/jquery.touchSwipe.min.js', array('jquery'), '1.6.5', TRUE);
-	wp_enqueue_script('houseofcoffee-fitvids', get_template_directory_uri() . '/js/jquery.fitvids.js', array('jquery'), '1.0.3', TRUE);
-	wp_enqueue_script('houseofcoffee-idangerous-swiper', get_template_directory_uri() . '/js/idangerous.swiper-2.4.1.min.js', array('jquery'), '2.4.1', TRUE);
-	wp_enqueue_script('houseofcoffee-owl', get_template_directory_uri() . '/js/owl.carousel.min.js', array('jquery'), '1.3.1', TRUE);
-	wp_enqueue_script('houseofcoffee-fresco', get_template_directory_uri() . '/js/fresco.js', array('jquery'), '1.3.0', TRUE);
-	wp_enqueue_script('houseofcoffee-select2', get_template_directory_uri() . '/js/select2.min.js', array('jquery'), '3.5.1', TRUE);
-	wp_enqueue_script('houseofcoffee-nanoscroller', get_template_directory_uri() . '/js/jquery.nanoscroller.min.js', array('jquery'), '0.7.6', TRUE);
-	wp_enqueue_script('houseofcoffee-stellar', get_template_directory_uri() . '/js/jquery.stellar.min.js', array('jquery'), '0.6.2', TRUE);
+	wp_enqueue_script('shopkeeper-touchswipe', get_template_directory_uri() . '/js/jquery.touchSwipe.min.js', array('jquery'), '1.6.5', TRUE);
+	wp_enqueue_script('shopkeeper-fitvids', get_template_directory_uri() . '/js/jquery.fitvids.js', array('jquery'), '1.0.3', TRUE);
+	wp_enqueue_script('shopkeeper-idangerous-swiper', get_template_directory_uri() . '/js/swiper.min.js', array('jquery'), '3.3.1', TRUE);
+	wp_enqueue_script('shopkeeper-owl', get_template_directory_uri() . '/js/owl.carousel.min.js', array('jquery'), '1.3.1', TRUE);
+	wp_enqueue_script('shopkeeper-fresco', get_template_directory_uri() . '/js/fresco.js', array('jquery'), '1.3.0', TRUE);
+	wp_enqueue_script('shopkeeper-select2', get_template_directory_uri() . '/js/select2.min.js', array('jquery'), '3.5.1', TRUE);
+	wp_enqueue_script('shopkeeper-nanoscroller', get_template_directory_uri() . '/js/jquery.nanoscroller.min.js', array('jquery'), '0.7.6', TRUE);
+	wp_enqueue_script('shopkeeper-stellar', get_template_directory_uri() . '/js/jquery.stellar.min.js', array('jquery'), '0.6.2', TRUE);
 	
-	wp_enqueue_script('houseofcoffee-isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array('jquery'), 'v2.0.0', TRUE);
-	wp_enqueue_script('houseofcoffee-imagesloaded', get_template_directory_uri() . '/js/imagesloaded.js', array('jquery'), 'v3.1.4', TRUE);
+	wp_enqueue_script('shopkeeper-isotope', get_template_directory_uri() . '/js/isotope.pkgd.min.js', array('jquery'), 'v2.0.0', TRUE);
+	wp_enqueue_script('shopkeeper-imagesloaded', get_template_directory_uri() . '/js/imagesloaded.js', array('jquery'), 'v3.1.4', TRUE);
 	
-	wp_enqueue_script('houseofcoffee-easyzoom', get_template_directory_uri() . '/js/easyzoom.js', array('jquery'), '1.0', TRUE);
+	wp_enqueue_script('shopkeeper-easyzoom', get_template_directory_uri() . '/js/easyzoom.js', array('jquery'), '1.0', TRUE);
 	
-	wp_enqueue_script('houseofcoffee-scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0', TRUE);
+	wp_enqueue_script('shopkeeper-scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), '1.0', TRUE);
 	
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
 }
-add_action( 'wp_enqueue_scripts', 'houseofcoffee_scripts', 99 );
+add_action( 'wp_enqueue_scripts', 'shopkeeper_scripts', 99 );
 
 
 
 // admin area
-function houseofcoffee_admin_scripts() {
+function shopkeeper_admin_scripts() {
     if ( is_admin() ) {
         global $post_type;
 		
 		if ( (isset($_GET['post_type']) && ($_GET['post_type'] == 'portfolio')) || ($post_type == 'portfolio')) :
-			wp_enqueue_script("houseofcoffee_admin_scripts", get_template_directory_uri() . "/js/wp-admin-portfolio.js", array('wp-color-picker'), false, "1.0");
+			wp_enqueue_script("shopkeeper_admin_scripts", get_template_directory_uri() . "/js/wp-admin-portfolio.js", array('wp-color-picker'), false, "1.0");
 		endif;
 		
     }
 }
-add_action( 'admin_enqueue_scripts', 'houseofcoffee_admin_scripts' );
+add_action( 'admin_enqueue_scripts', 'shopkeeper_admin_scripts' );
 
 
 
@@ -407,8 +447,8 @@ add_action( 'admin_enqueue_scripts', 'houseofcoffee_admin_scripts' );
 /******************************** Tweak WP admin bar  ****************************************/
 /*********************************************************************************************/
 
-add_action( 'wp_head', 'houseofcoffee_override_toolbar_margin', 11 );
-function houseofcoffee_override_toolbar_margin() {	
+add_action( 'wp_head', 'shopkeeper_override_toolbar_margin', 11 );
+function shopkeeper_override_toolbar_margin() {	
 	if ( is_admin_bar_showing() ) {
 		?>
 			<style type="text/css" media="screen">
@@ -422,43 +462,11 @@ function houseofcoffee_override_toolbar_margin() {
 }
 
 
-
-
-/*********************************************************************************************/
-/******************************** Title format  **********************************************/
-/*********************************************************************************************/
-
-add_filter( 'wp_title', 'houseofcoffee_wp_title', 10, 2 );
-function houseofcoffee_wp_title( $title, $sep ) {
-	global $paged, $page;
-
-	if ( is_feed() ) {
-		return $title;
-	}
-
-	// Add the site name.
-	$title .= get_bloginfo( 'name', 'display' );
-
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) ) {
-		$title = "$title $sep $site_description";
-	}
-
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 ) {
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'houseofcoffee' ), max( $paged, $page ) );
-	}
-
-	return $title;
-}
-
-
 /******************************************************************************/
 /****** Register widgetized area and update sidebar with default widgets ******/
 /******************************************************************************/
 
-function houseofcoffee_widgets_init() {
+function shopkeeper_widgets_init() {
 	
 	$sidebars_widgets = wp_get_sidebars_widgets();	
 	$footer_area_widgets_counter = "0";	
@@ -486,7 +494,7 @@ function houseofcoffee_widgets_init() {
 	
 	//default sidebar
 	register_sidebar(array(
-		'name'          => __( 'Sidebar', 'houseofcoffee' ),
+		'name'          => __( 'Sidebar', 'shopkeeper' ),
 		'id'            => 'default-sidebar',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
@@ -496,7 +504,7 @@ function houseofcoffee_widgets_init() {
 	
 	//footer widget area
 	register_sidebar( array(
-		'name'          => __( 'Footer Widget Area', 'houseofcoffee' ),
+		'name'          => __( 'Footer Widget Area', 'shopkeeper' ),
 		'id'            => 'footer-widget-area',
 		'before_widget' => '<div class="' . $footer_area_widgets_columns . ' columns"><aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside></div>',
@@ -506,15 +514,25 @@ function houseofcoffee_widgets_init() {
 	
 	//catalog widget area
 	register_sidebar( array(
-		'name'          => __( 'Shop Sidebar', 'houseofcoffee' ),
+		'name'          => __( 'Shop Sidebar', 'shopkeeper' ),
 		'id'            => 'catalog-widget-area',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
 	) );
+
+	//offcanvas widget area
+	register_sidebar( array(
+		'name'          => __( 'Right Offcanvas Sidebar', 'shopkeeper' ),
+		'id'            => 'offcanvas-widget-area',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
 }
-add_action( 'widgets_init', 'houseofcoffee_widgets_init' );
+add_action( 'widgets_init', 'shopkeeper_widgets_init' );
 
 
 
@@ -524,10 +542,20 @@ add_action( 'widgets_init', 'houseofcoffee_widgets_init' );
 /****** Remove Woocommerce prettyPhoto ***********************************************/
 /******************************************************************************/
 
-add_action( 'wp_enqueue_scripts', 'houseofcoffee_remove_woo_lightbox', 99 );
-function houseofcoffee_remove_woo_lightbox() {
+add_action( 'wp_enqueue_scripts', 'shopkeeper_remove_woo_lightbox', 99 );
+function shopkeeper_remove_woo_lightbox() {
     wp_dequeue_script('prettyPhoto-init');
 }
+
+
+
+/*********************************************************************************************/
+/****************************** WooCommerce Category Image ***********************************/
+/*********************************************************************************************/
+
+if ( ! function_exists( 'woocommerce_add_category_header_img' ) ) :
+	require_once('inc/addons/woocommerce-header-category-image.php');
+endif;
 
 
 
@@ -540,7 +568,7 @@ function sant_prettyadd ($content, $id, $size, $permalink, $icon, $text) {
     if ($permalink) {
     	return $content;    
     }
-    $content = preg_replace("/<a/","<a class=\"fresco\" data-fresco-group=\"\"", $content, 1);
+    $content = preg_replace("/<a/","<span class=\"fresco\" data-fresco-group=\"\"", $content, 1);
     return $content;
 }
 
@@ -578,7 +606,7 @@ function newIconFont() {
     );  
     wp_enqueue_style( 'redux-font-awesome' );
 }
-add_action( 'redux/page/houseofcoffee_theme_options/enqueue', 'newIconFont' );
+add_action( 'redux/page/shopkeeper_theme_options/enqueue', 'newIconFont' );
 
 
 
@@ -601,11 +629,11 @@ function remove_admin_bar() {
 /* WooCommerce Update Number of Items in the cart *****************************/
 /******************************************************************************/
 
-add_action('woocommerce_ajax_added_to_cart', 'houseofcoffee_ajax_added_to_cart');
-function houseofcoffee_ajax_added_to_cart() {
+add_action('woocommerce_ajax_added_to_cart', 'shopkeeper_ajax_added_to_cart');
+function shopkeeper_ajax_added_to_cart() {
 
-	add_filter('add_to_cart_fragments', 'houseofcoffee_shopping_bag_items_number');
-	function houseofcoffee_shopping_bag_items_number( $fragments ) 
+	add_filter('add_to_cart_fragments', 'shopkeeper_shopping_bag_items_number');
+	function shopkeeper_shopping_bag_items_number( $fragments ) 
 	{
 		global $woocommerce;
 		ob_start(); ?>
@@ -616,7 +644,7 @@ function houseofcoffee_ajax_added_to_cart() {
 		})(jQuery);
 		</script>
         
-        <span class="shopping_bag_items_number"><?php echo esc_html($woocommerce->cart->cart_contents_count); ?></span>
+        <span class="shopping_bag_items_number"><?php echo esc_html(WC()->cart->get_cart_contents_count()); ?></span>
 
 		<?php
 		$fragments['.shopping_bag_items_number'] = ob_get_clean();
@@ -670,25 +698,51 @@ function woocommerce_get_product_thumbnail( $size = 'product_small_thumbnail', $
 /******************************************************************************/
 /* WooCommerce Wrap Oembed Stuff **********************************************/
 /******************************************************************************/
-add_filter('embed_oembed_html', 'houseofcoffee_embed_oembed_html', 99, 4);
-function houseofcoffee_embed_oembed_html($html, $url, $attr, $post_id) {
+add_filter('embed_oembed_html', 'shopkeeper_embed_oembed_html', 99, 4);
+function shopkeeper_embed_oembed_html($html, $url, $attr, $post_id) {
 	return '<div class="video-container">' . $html . '</div>';
 }
 
 
 
 
+/******************************************************************************/
+/* Share Product **************************************************************/
+/******************************************************************************/
 
-/******************************************************************************/
-/* WooCommerce remove review tab **********************************************/
-/******************************************************************************/
-if ( (isset($houseofcoffee_theme_options['review_tab'])) && ($houseofcoffee_theme_options['review_tab'] == "0" ) ) {
-add_filter( 'woocommerce_product_tabs', 'houseofcoffee_remove_reviews_tab', 98);
-	function houseofcoffee_remove_reviews_tab($tabs) {
-		unset($tabs['reviews']);
-		return $tabs;
-	}
+function getbowtied_single_share_product() {
+    global $post, $product, $shopkeeper_theme_options;
+    if ( (isset($shopkeeper_theme_options['sharing_options'])) && ($shopkeeper_theme_options['sharing_options'] == "1" ) ) :
+	?>
+
+    <div class="product_socials_wrapper show-share-text-on-mobiles">
+		<div class="row">
+			<div class="large-12 columns">
+				
+				<div class="share-product-text">
+					<?php _e('Share this product', 'shopkeeper' ); ?>
+				</div><!--.share-product-text-->
+                
+                <?php
+					//Get the Thumbnail URL
+					$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), false, '' );
+				?>
+				
+				<div class="product_socials_wrapper_inner">
+					<a href="//www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank" class="social_media social_media_facebook"><i class="fa fa-facebook"></i></a>
+					<a href="//twitter.com/share?url=<?php the_permalink(); ?>" target="_blank" class="social_media social_media_twitter"><i class="fa fa-twitter"></i></a>
+					<a href="//plus.google.com/share?url=<?php the_permalink(); ?>" target="_blank" class="social_media social_media_googleplus"><i class="fa fa-google-plus"></i></a>
+					<a href="//pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&amp;media=<?php echo esc_url($src[0]) ?>&amp;description=<?php echo urlencode(get_the_title()); ?>" target="_blank" class="social_media social_media_pinterest"><i class="fa fa-pinterest"></i></a>
+				</div><!--.product_socials_wrapper_inner-->
+				
+			</div>
+		</div>
+	</div><!--.product_socials_wrapper-->
+
+<?php
+    endif;
 }
+add_filter( 'getbowtied_woocommerce_before_single_product_summary_data_tabs', 'getbowtied_single_share_product', 50 );
 
 
 
@@ -699,7 +753,7 @@ add_filter( 'woocommerce_product_tabs', 'houseofcoffee_remove_reviews_tab', 98);
 /******************************************************************************/
 
 /*function wishlist_shortcode_offcanvas() {
-    echo do_shortcode('[houseofcoffee_yith_wcwl_wishlist]');
+    echo do_shortcode('[shopkeeper_yith_wcwl_wishlist]');
     die;
 }
 add_action('wp_ajax_wishlist_shortcode', 'wishlist_shortcode_offcanvas');
@@ -715,12 +769,12 @@ add_action('wp_ajax_nopriv_wishlist_shortcode', 'wishlist_shortcode_offcanvas');
  * Hook in on activation
  */
 global $pagenow;
-if ( is_admin() && isset( $_GET['activated'] ) && $pagenow == 'themes.php' ) add_action( 'init', 'houseofcoffee_woocommerce_image_dimensions', 1 );
+if ( is_admin() && isset( $_GET['activated'] ) && $pagenow == 'themes.php' ) add_action( 'init', 'shopkeeper_woocommerce_image_dimensions', 1 );
 
 /**
  * Define image sizes
  */
-function houseofcoffee_woocommerce_image_dimensions() {
+function shopkeeper_woocommerce_image_dimensions() {
   	$catalog = array(
 		'width' 	=> '350',	// px
 		'height'	=> '435',	// px
@@ -745,4 +799,56 @@ function houseofcoffee_woocommerce_image_dimensions() {
 	update_option( 'shop_thumbnail_image_size', $thumbnail ); 	// Image gallery thumbs
 }
 
+if ( ! function_exists('shopkeeper_woocommerce_image_dimensions') ) :
+	function shopkeeper_woocommerce_image_dimensions() {
+		global $pagenow;
+	 
+		if ( ! isset( $_GET['activated'] ) || $pagenow != 'themes.php' ) {
+			return;
+		}
+
+	  	$catalog = array(
+			'width' 	=> '350',	// px
+			'height'	=> '435',	// px
+			'crop'		=> 1 		// true
+		);
+
+		$single = array(
+			'width' 	=> '570',	// px
+			'height'	=> '708',	// px
+			'crop'		=> 1 		// true
+		);
+
+		$thumbnail = array(
+			'width' 	=> '70',	// px
+			'height'	=> '87',	// px
+			'crop'		=> 0 		// false
+		);
+
+		// Image sizes
+		update_option( 'shop_catalog_image_size', $catalog ); 		// Product category thumbs
+		update_option( 'shop_single_image_size', $single ); 		// Single product image
+		update_option( 'shop_thumbnail_image_size', $thumbnail ); 	// Image gallery thumbs
+	}
+	add_action( 'after_switch_theme', 'shopkeeper_woocommerce_image_dimensions', 1 );
+endif;
+
 if ( ! isset( $content_width ) ) $content_width = 900;
+
+/******************************************************************************/
+/****** Remove customize link from admin bar***********************************/
+/******************************************************************************/
+add_action( 'admin_bar_menu', 'remove_customize_link', 999 );
+function remove_customize_link( $wp_admin_bar ) 
+{
+    $wp_admin_bar->remove_menu( 'customize' );
+}
+
+/******************************************************************************/
+/****** Limit number of cross-sells *******************************************/
+/******************************************************************************/
+add_filter('woocommerce_cross_sells_total', 'cartCrossSellTotal');
+function cartCrossSellTotal($total) {
+	$total = '2';
+	return $total;
+}

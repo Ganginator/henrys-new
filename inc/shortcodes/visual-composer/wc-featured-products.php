@@ -20,7 +20,6 @@ vc_map(array(
 			"heading"		=> "Number of Products",
 			"description"	=> "",
 			"param_name"	=> "per_page",
-			"value"			=> "4",
 		),
 		
 		array(
@@ -31,7 +30,6 @@ vc_map(array(
 			"heading"		=> "Columns",
 			"description"	=> "",
 			"param_name"	=> "columns",
-			"value"			=> "4",
 		),
 		
 		array(
@@ -49,7 +47,6 @@ vc_map(array(
 				"Date"	=> "date",
 				"Rand"	=> "rand"
 			),
-			"std"			=> "date",
 		),
 		
 		array(
@@ -64,7 +61,6 @@ vc_map(array(
 				"Desc"	=> "desc",
 				"Asc"	=> "asc"
 			),
-			"std"			=> "desc",
 		),
    )
    

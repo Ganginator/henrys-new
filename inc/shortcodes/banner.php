@@ -6,6 +6,7 @@ function banner_simple_height($params = array(), $content = null) {
 		'title' => 'Title',
 		'subtitle' => 'Subtitle',
 		'link_url' => '',
+		'new_tab'  => '',
 		'title_color' => '#fff',
 		'subtitle_color' => '#fff',
 		'inner_stroke' => '2px',
@@ -29,9 +30,18 @@ function banner_simple_height($params = array(), $content = null) {
 	}
 	
 	$content = do_shortcode($content);
+
+	if ($new_tab == 'true')
+	{
+		$link_tab = 'onclick="window.open(\''.$link_url.'\', \'_blank\');"';
+	}
+	else 
+	{
+		$link_tab = 'onclick="location.href=\''.$link_url.'\';"';
+	}
 	
 	$banner_simple_height = '
-		<div class="shortcode_banner_simple_height '.$banner_with_img.'" onclick="location.href=\''.$link_url.'\';">
+		<div class="shortcode_banner_simple_height '.$banner_with_img.'" '.$link_tab.'>
 			<div class="shortcode_banner_simple_height_inner">
 				<div class="shortcode_banner_simple_height_bkg" style="background-color:'.$bg_color.'; background-image:url('.$bg_image.')"></div>
 			

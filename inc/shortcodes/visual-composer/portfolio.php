@@ -45,7 +45,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "How many portfolio items would you like to show?",
 			"param_name"	=> "items",
-			"value"			=> "999",
 		),
 		
 		array(
@@ -69,7 +68,6 @@ vc_map(array(
 				"Yes"	=> "yes",
 				"No"	=> "no"
 			),
-			"std"			=> "yes",
 			"dependency" 	=> Array('element' => "category", 'value' => array(''))
 		),
 		
@@ -84,7 +82,6 @@ vc_map(array(
 				"Date"			=> "date",
 				"Alphabetical"	=> "alphabetical"
 			),
-			"std"			=> "date",
 		),
 		
 		array(
@@ -98,7 +95,6 @@ vc_map(array(
 				"Descending"	=> "desc",
 				"Ascending"	=> "asc"
 			),
-			"std"			=> "desc",
 		),
 		
 		array(
@@ -114,7 +110,6 @@ vc_map(array(
 				"Masonry Style - V2"		=> "grid2",
 				"Masonry Style - V3"		=> "grid3"
 			),
-			"std"			=> "default",
 		),
 		
 		array(
@@ -129,7 +124,6 @@ vc_map(array(
 				"4"	=> "4",
 				"5"	=> "5"
 			),
-			"std"			=> "5",
 			"dependency" 	=> Array('element' => "grid", 'value' => array('default'))
 		),
    )

@@ -73,7 +73,7 @@ class rc_sweet_custom_menu {
 	function rc_scm_update_custom_nav_fields( $menu_id, $menu_item_db_id, $args ) {
 	
 	    // Check if element is properly sent
-	    if ( is_array( $_REQUEST['menu-item-background_url']) ) {
+	    if ( !empty( $_REQUEST['menu-item-background_url']) ) {
 	        $background_url_value = $_REQUEST['menu-item-background_url'][$menu_item_db_id];
 	        update_post_meta( $menu_item_db_id, '_menu_item_background_url', $background_url_value );
 	    }

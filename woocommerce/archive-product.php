@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 get_header('shop'); 
 
-global $houseofcoffee_theme_options;
+global $shopkeeper_theme_options;
 
 //woocommerce_before_main_content
 remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
@@ -35,16 +35,16 @@ if (function_exists('woocommerce_get_header_image_url'))  $category_header_src =
 
 if ( 
 	is_active_sidebar( 'catalog-widget-area' )
-	 && (isset($houseofcoffee_theme_options['sidebar_style']))
-	 && ($houseofcoffee_theme_options['sidebar_style'] == "1") 
+	 && (isset($shopkeeper_theme_options['sidebar_style']))
+	 && ($shopkeeper_theme_options['sidebar_style'] == "1") 
 )
 {
 	$shop_has_sidebar = true;
 }
 
-$houseofcoffee_theme_options['category_header_parallax'] = 1;
+// $shopkeeper_theme_options['category_header_parallax'] = 1;
 
-if ((isset($houseofcoffee_theme_options['category_header_parallax'])) && ($houseofcoffee_theme_options['category_header_parallax'] == "1"))
+if ((isset($shopkeeper_theme_options['category_header_parallax'])) && ($shopkeeper_theme_options['category_header_parallax'] == "1"))
 {
    $category_header_parallax_ratio = 'data-stellar-background-ratio="0.5"';
    $category_header_parallax_class = ' parallax';
@@ -55,12 +55,20 @@ if ((isset($houseofcoffee_theme_options['category_header_parallax'])) && ($house
    $category_header_with_parallax = '';
 }
 
+$page_header_src = "";
 
+if (has_post_thumbnail(get_option( 'woocommerce_shop_page_id' ))) $page_header_src = wp_get_attachment_url( get_post_thumbnail_id(get_option( 'woocommerce_shop_page_id' )), 'full' );
+
+if ( is_shop() && get_post_meta( get_option( 'woocommerce_shop_page_id' ), 'page_title_meta_box_check', true ) ) {
+    $page_title_option = get_post_meta( get_option( 'woocommerce_shop_page_id' ), 'page_title_meta_box_check', true );
+} else {
+    $page_title_option = "on";
+}
  
 ?>
    	<div id="primary" class="content-area shop-page<?php echo $shop_has_sidebar ? ' shop-has-sidebar':'';?>">
 		   
-		<div  class="shop_header <?php if ($category_header_src != "") : ?>with_featured_img<?php endif; ?> <?php echo $category_header_with_parallax; ?>"> 
+		<div  class="shop_header <?php if ($category_header_src != "" || (is_shop() && $page_header_src != "")) : ?>with_featured_img<?php endif; ?> <?php echo $category_header_with_parallax; ?>"> 
 		 	
 			<?php if ($category_header_src != "") : ?>
 			
@@ -68,16 +76,27 @@ if ((isset($houseofcoffee_theme_options['category_header_parallax'])) && ($house
 					 class="shop_header_bkg <?php echo $category_header_parallax_class; ?>" style="background-image:url(<?php echo esc_url($category_header_src); ?>)">
 			   </div>
 		 
-			<?php endif ?>	
+			<?php endif ?>
+
+            <?php if ( is_shop() && $page_header_src != "" ) : ?>
+            
+               <div <?php echo $category_header_parallax_ratio; ?>
+                     class="shop_header_bkg <?php echo $category_header_parallax_class; ?>" style="background-image:url(<?php echo esc_url($page_header_src); ?>)">
+               </div>
+         
+            <?php endif ?>
 		 
             <div class="shop_header_overlay"></div>
 		 
             <div class="row">
                 <div class="large-12 large-centered columns">
-                    
-                    <?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-                        <h1 class="page-title on-shop"><?php woocommerce_page_title(); ?></h1>
-                    <?php endif; ?>
+                                        
+                    <h1 class="page-title on-shop">
+                        <?php if ( $page_title_option == "on" ) : ?>   
+                            <?php woocommerce_page_title(); ?>
+                        <?php endif; ?>
+                    </h1>
+                   
                    
                     <div class="row">
                         <div class="large-9 large-centered columns">
@@ -318,6 +337,8 @@ if ((isset($houseofcoffee_theme_options['category_header_parallax'])) && ($house
                         if ( is_product_category() && (get_option('woocommerce_category_archive_display') == 'subcategories') ) $show_products = FALSE;
 
                         if ( is_product_category() && (get_woocommerce_term_meta($parent_id, 'display_type', true) == 'subcategories' ) ) $show_products = FALSE;
+
+                        if ( is_product_category() && (get_woocommerce_term_meta($parent_id, 'display_type', true) == 'products' ) ) $show_products = TRUE;
 						
 						if ( isset($_GET["s"]) && $_GET["s"] != '' ) $show_products = TRUE;
                     

@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $woocommerce, $product, $houseofcoffee_theme_options;
+global $woocommerce, $product, $shopkeeper_theme_options;
 
 if ( ! $product->is_purchasable() ) return;
 ?>

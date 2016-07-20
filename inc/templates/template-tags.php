@@ -35,9 +35,9 @@ add_action( 'wp', 'grab_ids_from_gallery' );
 
 
 
-if ( ! function_exists( 'houseofcoffee_content_nav' ) ) :
-function houseofcoffee_content_nav( $nav_id ) {
-	global $wp_query, $post, $houseofcoffee_theme_options;
+if ( ! function_exists( 'shopkeeper_content_nav' ) ) :
+function shopkeeper_content_nav( $nav_id ) {
+	global $wp_query, $post, $shopkeeper_theme_options;
 
 	// Don't print empty markup on single pages if there's nowhere to navigate.
 	if ( is_single() ) {
@@ -65,11 +65,11 @@ function houseofcoffee_content_nav( $nav_id ) {
             <div class="row">
                 
                 <div class="small-6 columns">
-                	<div class="nav-previous"><?php previous_post_link( '%link', '<div class="nav-previous-title">'.__( "Previous Reading", "houseofcoffee" ).'</div> <span> %title </span>' ); ?></div>
+                	<div class="nav-previous"><?php previous_post_link( '%link', '<div class="nav-previous-title">'.__( "Previous Reading", "shopkeeper" ).'</div> <span> %title </span>' ); ?></div>
                 </div><!-- .columns -->
                 
                 <div class="small-6 columns">
-                	<div class="nav-next"><?php next_post_link( '%link', '<div class="nav-next-title">'.__( "Next Reading", "houseofcoffee" ).'</div> <span> %title </span>' ); ?></div>
+                	<div class="nav-next"><?php next_post_link( '%link', '<div class="nav-next-title">'.__( "Next Reading", "shopkeeper" ).'</div> <span> %title </span>' ); ?></div>
                 </div><!-- .columns -->
                 
             </div><!-- .row -->
@@ -79,13 +79,13 @@ function houseofcoffee_content_nav( $nav_id ) {
 				
 			<div class="small-6 columns">
                 <?php if ( get_next_posts_link() ) : ?>
-                <div class="nav-previous"><span class="meta-nav"><i class="fa fa-chevron-left"></i></span><span><?php next_posts_link( __( 'Older posts', 'houseofcoffee' ) ); ?></span></div>
+                <div class="nav-previous"><span class="meta-nav"><i class="fa fa-chevron-left"></i></span><span><?php next_posts_link( __( 'Older posts', 'shopkeeper' ) ); ?></span></div>
 				<?php endif; ?>
 			</div>	
 				
 			<div class="small-6 columns">
                 <?php if ( get_previous_posts_link() ) : ?>
-                <div class="nav-next"><span><?php previous_posts_link( __( 'Newer posts', 'houseofcoffee' ) ); ?></span><span class="meta-nav"><i class="fa fa-chevron-right"></i></span></div>
+                <div class="nav-next"><span><?php previous_posts_link( __( 'Newer posts', 'shopkeeper' ) ); ?></span><span class="meta-nav"><i class="fa fa-chevron-right"></i></span></div>
                 <?php endif; ?>
 			</div>
 
@@ -96,13 +96,13 @@ function houseofcoffee_content_nav( $nav_id ) {
 	</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
 	<?php
 }
-endif; // houseofcoffee_content_nav
+endif; // shopkeeper_content_nav
 
 
 
 
-if ( ! function_exists( 'houseofcoffee_product_nav' ) ) :
-function houseofcoffee_product_nav( $nav_id ) {
+if ( ! function_exists( 'shopkeeper_product_nav' ) ) :
+function shopkeeper_product_nav( $nav_id ) {
 	global $wp_query, $post;
 
 	// Don't print empty markup on single pages if there's nowhere to navigate.
@@ -129,20 +129,20 @@ function houseofcoffee_product_nav( $nav_id ) {
 	</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
 	<?php
 }
-endif; // houseofcoffee_product_nav
+endif; // shopkeeper_product_nav
 
 
 
 
-if ( ! function_exists( 'houseofcoffee_comment' ) ) :
-function houseofcoffee_comment( $comment, $args, $depth ) {
+if ( ! function_exists( 'shopkeeper_comment' ) ) :
+function shopkeeper_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
 
 	if ( 'pingback' == $comment->comment_type || 'trackback' == $comment->comment_type ) : ?>
 
 	<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
 		<div class="comment-body">
-			<?php _e( 'Pingback:', 'houseofcoffee' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( 'Edit', 'houseofcoffee' ), '<span class="edit-link">', '</span>' ); ?>
+			<?php _e( 'Pingback:', 'shopkeeper' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( 'Edit', 'shopkeeper' ), '<span class="edit-link">', '</span>' ); ?>
 		</div>
 
 	<?php else : ?>
@@ -157,15 +157,15 @@ function houseofcoffee_comment( $comment, $args, $depth ) {
 				</div><!-- .comment-author-avatar -->
 				
 				<?php if ( '0' == $comment->comment_approved ) : ?>
-					<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'houseofcoffee' ); ?></p>
+					<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'shopkeeper' ); ?></p>
 				<?php endif; ?>
 				
-				<?php printf( __( '%s', 'houseofcoffee' ), sprintf( '<h3 class="comment-author">%s</h3>', get_comment_author_link() ) ); ?>
+				<?php printf( __( '%s', 'shopkeeper' ), sprintf( '<h3 class="comment-author">%s</h3>', get_comment_author_link() ) ); ?>
                 
                 <div class="comment-metadata">
                     <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
                         <time datetime="<?php comment_time( 'c' ); ?>">
-                            <?php printf( __( '%1$s at %2$s', 'houseofcoffee' ), get_comment_date(), get_comment_time() ); ?>
+                            <?php printf( __( '%1$s at %2$s', 'shopkeeper' ), get_comment_date(), get_comment_time() ); ?>
                         </time>
                     </a>
                 </div><!-- .comment-metadata -->
@@ -182,7 +182,7 @@ function houseofcoffee_comment( $comment, $args, $depth ) {
 					) ) );
 				?>
 				
-				<?php edit_comment_link( __( 'Edit', 'houseofcoffee' ), '<span class="comment-edit-link"><i class="fa fa-pencil"></i>', '</span>' ); ?>
+				<?php edit_comment_link( __( 'Edit', 'shopkeeper' ), '<span class="comment-edit-link"><i class="fa fa-pencil"></i>', '</span>' ); ?>
                 
 				<div class="comment-separator"></div>
 				
@@ -193,7 +193,7 @@ function houseofcoffee_comment( $comment, $args, $depth ) {
 	<?php
 	endif;
 }
-endif; // ends check for houseofcoffee_comment()
+endif; // ends check for shopkeeper_comment()
 
 
 
@@ -201,7 +201,7 @@ endif; // ends check for houseofcoffee_comment()
 /**
  * Returns true if a blog has more than 1 category.
  */
-function houseofcoffee_categorized_blog() {
+function shopkeeper_categorized_blog() {
 	if ( false === ( $all_the_cool_cats = get_transient( 'all_the_cool_cats' ) ) ) {
 		// Create an array of all the categories that are attached to posts.
 		$all_the_cool_cats = get_categories( array(
@@ -215,10 +215,10 @@ function houseofcoffee_categorized_blog() {
 	}
 
 	if ( '1' != $all_the_cool_cats ) {
-		// This blog has more than 1 category so houseofcoffee_categorized_blog should return true.
+		// This blog has more than 1 category so shopkeeper_categorized_blog should return true.
 		return true;
 	} else {
-		// This blog has only 1 category so houseofcoffee_categorized_blog should return false.
+		// This blog has only 1 category so shopkeeper_categorized_blog should return false.
 		return false;
 	}
 }
@@ -227,11 +227,11 @@ function houseofcoffee_categorized_blog() {
 
 
 /**
- * Flush out the transients used in houseofcoffee_categorized_blog.
+ * Flush out the transients used in shopkeeper_categorized_blog.
  */
-function houseofcoffee_category_transient_flusher() {
+function shopkeeper_category_transient_flusher() {
 	// Like, beat it. Dig?
 	delete_transient( 'all_the_cool_cats' );
 }
-add_action( 'edit_category', 'houseofcoffee_category_transient_flusher' );
-add_action( 'save_post',     'houseofcoffee_category_transient_flusher' );
+add_action( 'edit_category', 'shopkeeper_category_transient_flusher' );
+add_action( 'save_post',     'shopkeeper_category_transient_flusher' );

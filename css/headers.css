@@ -142,7 +142,7 @@ body.admin-bar #page_wrapper.transparent_header .top-headers-wrapper
 {
 	display:inline-block;
 	vertical-align:middle;
-	margin-left:5px;
+	margin-left: 16px;
     position:relative;
     cursor:pointer;
 	
@@ -171,15 +171,16 @@ body.admin-bar #page_wrapper.transparent_header .top-headers-wrapper
 }
 
 .tools_button_icon {
-	width:32px;
+	width:20px;
 	height:32px;
 	display:block;
 	float:left;
+	text-align: left;
 }
 
 .tools_button_icon img {
-	max-width:32px;
-	max-height:32px;
+	max-width:100%;
+	max-height:100%;
 	
 	position: relative;
 	top: 50%;
@@ -203,7 +204,7 @@ body.admin-bar #page_wrapper.transparent_header .top-headers-wrapper
 	height:32px;
 	line-height:34px;
 	display:block;
-	margin:0 0 0 32px;
+	margin:0 0 0 22px;
 	text-align:left;
 }
 
@@ -212,7 +213,7 @@ body.admin-bar #page_wrapper.transparent_header .top-headers-wrapper
 	float: left;
 	font-size: 12px;
 	font-weight: 700;
-	margin: 10px 0px 0 2px;
+	margin: 11px 10px 0 2px;
 	padding: 1px 0 2px 11px;
 	border-left: 1px solid #ddd;
 	text-transform: uppercase;
@@ -258,15 +259,15 @@ body.admin-bar #page_wrapper.transparent_header .top-headers-wrapper
 	{
 		float: left;
 		font-size: 0.875rem;
-		margin: 9px 0px 0 7px;
+		margin: 9px 10px 0 7px;
 		padding: 2px 0 2px 12px;
 	}
 	
 	.shopping_bag_items_number,
 	.wishlist_items_number
 	{
-		margin:0 0 0 35px;
-		line-height:34px;
+		margin: 2px 0 0 23px;
+		line-height: 36px;
 	}
 	
 	
@@ -330,11 +331,6 @@ body.admin-bar #page_wrapper.transparent_header .top-headers-wrapper
 	.site-branding img {
 		text-align: center;
 		height:auto;
-	}
-	
-	.site-tools
-	{
-		margin-left:35px;
 	}
 	
 	.site-tools ul .wishlist-button,

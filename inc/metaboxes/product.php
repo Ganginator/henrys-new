@@ -48,7 +48,7 @@ function product_options_meta_box_save($post_id)
     if( !isset( $_POST['product_options_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['product_options_meta_box_nonce'], 'product_options_meta_box' ) ) return;
      
     // if our current user can't edit this post, bail
-    if( !current_user_can( 'edit_post' ) ) return;
+    if ( !current_user_can( 'edit_post', $post_id ) ) return;
 
     $chk = isset($_POST['product_full_screen_description_meta_box_check']) ? 'on' : 'off';
     update_post_meta( $post_id, 'product_full_screen_description_meta_box_check', $chk );

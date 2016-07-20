@@ -1,7 +1,7 @@
 <?php
 
-function houseofcoffee_product_mod($atts, $content = null) {	
-	global $houseofcoffee_theme_options;
+function shopkeeper_product_mod($atts, $content = null) {	
+	global $shopkeeper_theme_options;
 	extract(shortcode_atts(array(
 		"id" => ''
 	), $atts));
@@ -14,4 +14,4 @@ function houseofcoffee_product_mod($atts, $content = null) {
 	return $content;
 }
 
-add_shortcode("product_mod", "houseofcoffee_product_mod");
+add_shortcode("product_mod", "shopkeeper_product_mod");

@@ -16,13 +16,13 @@
 									
 									if ( is_category() ) :
 										?>
-										<div class="page-type page-title-desc"><?php _e( 'Category Archives', 'houseofcoffee' ); ?></div>
+										<div class="page-type page-title-desc"><?php _e( 'Category Archives', 'shopkeeper' ); ?></div>
 										<h1 class="page-title blog-listing"><?php echo single_cat_title("", false) ?></h1>                                            
 										<?php
 								  
 									elseif ( is_tag() ) :
 										?>
-										<div class="page-type page-title-desc"><?php _e( 'Tag Archives', 'houseofcoffee' ); ?></div>
+										<div class="page-type page-title-desc"><?php _e( 'Tag Archives', 'shopkeeper' ); ?></div>
 										<h1 class="page-title blog-listing"><?php echo single_tag_title("", false) ?></h1>                                            
 										<?php
 									   
@@ -30,31 +30,31 @@
 									elseif ( is_author() ) :
 										the_post();
 										?>
-										<div class="page-type page-title-desc"><?php _e( 'Author', 'houseofcoffee' ); ?></div>
+										<div class="page-type page-title-desc"><?php _e( 'Author', 'shopkeeper' ); ?></div>
 										<h1 class="page-title blog-listing"><?php echo get_the_author() ?></h1>                                            
 										<?php
 										rewind_posts();
 			
 									elseif ( is_day() ) :
 										?>
-										<div class="page-type page-title-desc"><?php _e( 'Day Archives', 'houseofcoffee' ); ?></div>
+										<div class="page-type page-title-desc"><?php _e( 'Day Archives', 'shopkeeper' ); ?></div>
 										<h1 class="page-title blog-listing"><?php echo get_the_date() ?></h1>                                            
 										<?php
 			
 									elseif ( is_month() ) :
 										?>
-										<div class="page-type page-title-desc"><?php _e( 'Month Archives', 'houseofcoffee' ); ?></div>
+										<div class="page-type page-title-desc"><?php _e( 'Month Archives', 'shopkeeper' ); ?></div>
 										<h1 class="page-title blog-listing"><?php echo get_the_date( 'F Y' ) ?></h1>                                            
 										<?php
 			
 									elseif ( is_year() ) :
 										?>
-										<div class="page-type page-title-desc"><?php _e( 'Year Archives', 'houseofcoffee' ); ?></div>
+										<div class="page-type page-title-desc"><?php _e( 'Year Archives', 'shopkeeper' ); ?></div>
 										<h1 class="page-title blog-listing"><?php echo get_the_date( 'Y' ) ?></h1>                                            
 										<?php
 			
 									else :
-										_e( 'Archives', 'houseofcoffee' );
+										_e( 'Archives', 'shopkeeper' );
 			
 									endif;
 								
@@ -76,8 +76,8 @@
 						
 				<div class="row">
 			
-					<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
-					<div class="large-9 columns with-sidebar">
+					<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+					<div class="large-12 columns with-sidebar">
 					<?php else : ?>
 					<div class="xxlarge-10 xlarge-11 large-12 large-centered columns">
 					<?php endif; ?>
@@ -98,7 +98,7 @@
 										<div class="blog-post-inner">
 										
 											<h1 class="entry-title-archive">
-												<a href="<?php echo has_post_format('link') ? esc_url( houseofcoffee_get_link_url() ) : the_permalink() ; ?>" class="thumbnail_archive">
+												<a href="<?php echo has_post_format('link') ? esc_url( shopkeeper_get_link_url() ) : the_permalink() ; ?>" class="thumbnail_archive">
 													<span class="thumbnail_archive_container">
 														<?php the_post_thumbnail('blog-isotope'); ?>
 													</span>
@@ -106,19 +106,19 @@
 												</a>
 											</h1>
 										 
-											<div class="post_meta_archive"><?php houseofcoffee_entry_archives(); ?></div>
+											<div class="post_meta_archive"><?php shopkeeper_entry_archives(); ?></div>
 										
 											<div class="entry-content-archive">
 												
 												<?php if (get_option('rss_use_excerpt') == 0) : ?>
-													<?php echo the_content(__('Continue Reading', 'houseofcoffee')); ?>
+													<?php the_content(__('Continue Reading', 'shopkeeper')); ?>
 												<?php elseif (get_option('rss_use_excerpt') == 1) : ?>
-													<?php echo the_excerpt(); ?>
+													<?php the_excerpt(); ?>
 													<a href="<?php the_permalink(); ?>" class="more-link">
-														<?php  echo __('Continue Reading', 'houseofcoffee'); ?>
+														<?php _e('Continue Reading', 'shopkeeper'); ?>
 													</a>
 												<?php else : ?>
-													<?php echo the_content(__('Continue Reading', 'houseofcoffee')); ?>
+													<?php the_content(__('Continue Reading', 'shopkeeper')); ?>
 												<?php endif ?>
 												
 											</div>
@@ -129,17 +129,18 @@
 								<?php endwhile; ?>
 								
 							</div><!-- .blog-isotope -->
-							<?php houseofcoffee_content_nav( 'nav-below' ); ?>
+							<?php shopkeeper_content_nav( 'nav-below' ); ?>
 						</div><!-- .blog-isotop-container-->
-			
-					</div><!-- .columns-->
-			
-					<?php if ( (isset($houseofcoffee_theme_options['sidebar_blog_listing'])) && ($houseofcoffee_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
-					<div class="large-3 columns">
+
+					<?php if ( (isset($shopkeeper_theme_options['sidebar_blog_listing'])) && ($shopkeeper_theme_options['sidebar_blog_listing'] == "1" ) ) : ?>
+					<div class="blog-sidebar">
 						<?php get_sidebar(); ?>
 					</div><!-- .columns-->
-					<?php endif; ?>
-	
+					<?php endif; ?>			
+
+					</div><!-- .columns-->
+			
+
 				</div><!-- .row-->
             
             <?php else : ?>

@@ -19,7 +19,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "How many product categories to display?",
 			"param_name"	=> "number",
-			"value"			=> "",
 		),
 		
 		array(
@@ -29,7 +28,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "Columns",
 			"param_name"	=> "columns",
-			"value"			=> "4",
 		),
 		
 		array(
@@ -47,7 +45,6 @@ vc_map(array(
 				"Menu Order"	=> "menu_order",
 				"Rand"	=> "rand"
 			),
-			"std"			=> "date",
 		),
 		
 		array(
@@ -61,7 +58,6 @@ vc_map(array(
 				"Desc"	=> "desc",
 				"Asc"	=> "asc"
 			),
-			"std"			=> "desc",
 		),
 		
 		array(
@@ -75,7 +71,6 @@ vc_map(array(
 				"Yes"	=> "1",
 				"No"	=> "0"
 			),
-			"std"			=> "1",
 		),
 		
 		array(
@@ -86,7 +81,6 @@ vc_map(array(
 			"heading"		=> "Parent",
 			"description"	=> "Set the parent paramater to 0 to only display top level categories.",
 			"param_name"	=> "parent",
-			"value"			=> "",
 		),
 		
 		array(
@@ -97,7 +91,6 @@ vc_map(array(
 			"heading"		=> "IDs",
 			"description"	=> "Set ids to a comma separated list of category ids to only show those.",
 			"param_name"	=> "ids",
-			"value"			=> "",
 		),
    )
    

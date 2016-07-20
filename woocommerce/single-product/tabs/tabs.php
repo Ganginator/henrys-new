@@ -4,10 +4,12 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.0.0
+ * @version 2.4.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Filter tabs and allow third parties to add their own
@@ -27,13 +29,10 @@ if ( ! empty( $tabs ) ) : ?>
 				<ul class="tabs">
 					
 					<?php foreach ( $tabs as $key => $tab ) : ?>
-		
-						<li class="<?php echo $key ?>_tab">
-							<a href="#tab-<?php echo $key ?>"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?></a>
+						<li class="<?php echo esc_attr( $key ); ?>_tab">
+					<a href="#tab-<?php echo esc_attr( $key ); ?>"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', esc_html( $tab['title'] ), $key ); ?></a>
 						</li>
-		
 					<?php endforeach; ?>
-					
 				</ul>
 		
 			</div>
@@ -41,7 +40,7 @@ if ( ! empty( $tabs ) ) : ?>
 		
 		<?php foreach ( $tabs as $key => $tab ) : ?>
 
-			<div class="panel entry-content" id="tab-<?php echo $key ?>">
+			<div class="panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>">
                 <div class="row">
                     <div class="large-8 xlarge-6 large-centered xlarge-centered columns">
                         <?php call_user_func( $tab['callback'], $key, $tab ) ?>

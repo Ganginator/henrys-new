@@ -36,18 +36,7 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "ID",
 			"param_name"	=> "id",
-			"value"			=> "",
 		),
-		
-		/*array(
-			"type"			=> "textfield",
-			"holder"		=> "div",
-			"class" 		=> "hide_in_vc_editor",
-			"admin_label" 	=> true,
-			"heading"		=> "SKU",
-			"param_name"	=> "sku",
-			"value"			=> "",
-		),*/
 		
 		array(
 			"type"			=> "dropdown",
@@ -60,7 +49,6 @@ vc_map(array(
 				"Yes"			=> "true",
 				"No"			=> "false"
 			),
-			"std"			=> "true",
 		),
 		
 		array(
@@ -76,7 +64,6 @@ vc_map(array(
 				"Normal"		=> "vc_btn_md",
 				"Large"			=> "vc_btn_lg"
 			),
-			"std"			=> "normal",
 		),
 		
 		array(
@@ -93,7 +80,6 @@ vc_map(array(
 				"Rounded Outlined"	=> "vc_btn_rounded_outlined",
 				"Link"				=> "vc_btn_link",
 			),
-			"std"			=> "rounded_outlined",
 		),
 		
 		array(
@@ -108,7 +94,6 @@ vc_map(array(
 				"Center"		=> "center",
 				"Right"			=> "right",
 			),
-			"std"			=> "center",
 		),
 		
 		array(

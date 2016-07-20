@@ -20,7 +20,6 @@ vc_map(array(
 			"class"			=> "hide_in_vc_editor",
 			"heading"		=> "How many product categories to display?",
 			"param_name"	=> "number",
-			"value"			=> "",
 			"admin_label" 	=> true
 		),
 		
@@ -32,13 +31,12 @@ vc_map(array(
 			"param_name"	=> "orderby",
 			"value"			=> array(
 				"None"			=> "none",
-				"ID"			=> "ID",
+				"ID"			=> "id",
 				"Name"			=> "name",
 				"Date"			=> "date",
 				"Menu Order"	=> "menu_order",
 				"Rand"			=> "rand"
 			),
-			"std"			=> "date",
 			"admin_label" 	=> true
 		),
 		
@@ -52,7 +50,6 @@ vc_map(array(
 				"Desc"	=> "desc",
 				"Asc"	=> "asc"
 			),
-			"std"			=> "desc",
 			"admin_label" 	=> true
 		),
 		
@@ -66,7 +63,6 @@ vc_map(array(
 				"Yes"	=> "1",
 				"No"	=> "0"
 			),
-			"std"			=> "1",
 			"admin_label" 	=> true
 		),
 		

@@ -7,7 +7,9 @@
  * @version     2.2.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 if ( $order ) : ?>
 
@@ -27,19 +29,17 @@ if ( $order ) : ?>
             <p>
                 <a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>" class="button pay"><?php _e( 'Pay', 'woocommerce' ) ?></a>
                 <?php if ( is_user_logged_in() ) : ?>
-                <a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'myaccount' ) ) ); ?>" class="button pay"><?php _e( 'My Account', 'woocommerce' ); ?></a>
+			<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="button pay"><?php _e( 'My Account', 'woocommerce' ); ?></a>
                 <?php endif; ?>
             </p>
     
         <?php else : ?>
-    
-            <p class="thankyoufororder"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
             
             <div class="thank_you_header_text">			
                 <div class="row">
                     <div class="xlarge-6 xlarge-centered large-8 large-centered columns">
                         
-                        <p><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), null ); ?></p>
+                        <p><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
                     
                     </div><!-- .xlarge-6-->
                 </div><!--	.row	-->                
@@ -52,7 +52,7 @@ if ( $order ) : ?>
                 
                         <ul class="order_details">
                             <li class="order">
-                                <span class="title"><?php _e( 'Order:', 'woocommerce' ); ?></span>
+                                <span class="title"><?php _e( 'Order Number:', 'woocommerce' ); ?></span>
                                 <strong><?php echo $order->get_order_number(); ?></strong>
                             </li>
                             <li class="date">
@@ -65,7 +65,7 @@ if ( $order ) : ?>
                             </li>
                             <?php if ( $order->payment_method_title ) : ?>
                             <li class="method">
-                                <span class="title"><?php _e( 'Payment method:', 'woocommerce' ); ?></span>
+                                <span class="title"><?php _e( 'Payment Method:', 'woocommerce' ); ?></span>
                                 <strong><?php echo $order->payment_method_title; ?></strong>
                             </li>
                             <?php endif; ?>

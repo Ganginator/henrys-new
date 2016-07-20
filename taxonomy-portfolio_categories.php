@@ -45,7 +45,8 @@
 			
 		endwhile;
 		
-		$portfolio_categories_queried = array_unique($portfolio_categories_queried);
+		//$portfolio_categories_queried = array_unique($portfolio_categories_queried);
+		$portfolio_categories_queried = $portfolio_categories_queried ? array_unique($portfolio_categories_queried) : $portfolio_categories_queried;
 		
 		?>
 		

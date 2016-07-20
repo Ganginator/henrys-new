@@ -4,8 +4,8 @@
 		<div class="large-12 columns">
             
         <div class="entry-content">
-            <?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'houseofcoffee' ) ); ?>
-            <?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'houseofcoffee' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+            <?php the_content( __( 'Continue Reading <span class="meta-nav">&rarr;</span>', 'shopkeeper' ) ); ?>
+            <?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'shopkeeper' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
         </div><!-- .entry-content -->
 
 		</div><!-- .columns -->

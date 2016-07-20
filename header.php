@@ -1,5 +1,5 @@
 <?php
-	global $houseofcoffee_theme_options, $woocommerce, $wp_version;
+	global $shopkeeper_theme_options, $woocommerce, $wp_version;
 ?>
 
 <!DOCTYPE html>
@@ -13,53 +13,21 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	
-    <!-- ******************************************************************** -->
-    <!-- * Title ************************************************************ -->
-    <!-- ******************************************************************** -->
-    
-    <title><?php wp_title( '|', true, 'right' ); ?></title>
-
-    <?php    
-    $parent_theme = wp_get_theme('houseofcoffee');
-    $child_theme = wp_get_theme();
-    $child_theme_in_use = false;
-    if ($parent_theme->name != $child_theme->name) { 
-        $child_theme_in_use = TRUE;
-    }    
-    $vc_version = "Not activated";
-    if (defined('WPB_VC_VERSION')) {
-        $vc_version = "v".WPB_VC_VERSION;
-    }    
-    ?>
-    
-    <!--    ******************************************************************** -->
-    <!--    ******************************************************************** -->
-    <!--
-            * WordPress: v<?php echo $wp_version . "\n"; ?>
-            <?php if (class_exists('WooCommerce')) : ?>* WooCommerce: v<?php echo $woocommerce->version . "\n"; ?><?php else : ?>* WooCommerce: Not Installed <?php echo "\n"; ?><?php endif; ?>
-            * Visual Composer: <?php echo $vc_version; ?><?php echo "\n"; ?>
-            * Theme: <?php echo $parent_theme->name; ?> v<?php echo $parent_theme->version; ?> by <?php echo $parent_theme->get('Author') . "\n"; ?>
-            * Child Theme: <?php if ($child_theme_in_use == TRUE) { ?>Activated<?php } else { ?>Not activated<?php } ?><?php echo "\n"; ?>
-    -->
-    <!--    ******************************************************************** -->
-    <!--    ******************************************************************** -->
     
     <link rel="profile" href="http://gmpg.org/xfn/11">
-    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-    
+    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">    
     
     <!-- ******************************************************************** -->
     <!-- * Custom Favicon *************************************************** -->
     <!-- ******************************************************************** -->
     
     <?php
-	if ( (isset($houseofcoffee_theme_options['favicon']['url'])) && (trim($houseofcoffee_theme_options['favicon']['url']) != "" ) ) {
+	if ( (isset($shopkeeper_theme_options['favicon']['url'])) && (trim($shopkeeper_theme_options['favicon']['url']) != "" ) ) {
         
         if (is_ssl()) {
-            $favicon_image_img = str_replace("http://", "https://", $houseofcoffee_theme_options['favicon']['url']);		
+            $favicon_image_img = str_replace("http://", "https://", $shopkeeper_theme_options['favicon']['url']);		
         } else {
-            $favicon_image_img = $houseofcoffee_theme_options['favicon']['url'];
+            $favicon_image_img = $shopkeeper_theme_options['favicon']['url'];
         }
 	?>
     
@@ -75,8 +43,8 @@
     <!-- * Custom Header JavaScript Code ************************************ -->
     <!-- ******************************************************************** -->
     
-    <?php if ( (isset($houseofcoffee_theme_options['header_js'])) && ($houseofcoffee_theme_options['header_js'] != "") ) : ?>
-        <?php echo $houseofcoffee_theme_options['header_js']; ?>
+    <?php if ( (isset($shopkeeper_theme_options['header_js'])) && ($shopkeeper_theme_options['header_js'] != "") ) : ?>
+        <?php echo $shopkeeper_theme_options['header_js']; ?>
     <?php endif; ?>
 
 	
@@ -104,16 +72,16 @@
 					$header_transparency_class = "";
 					$transparency_scheme = "";
 					
-					if ( (isset($houseofcoffee_theme_options['sticky_header'])) && ($houseofcoffee_theme_options['sticky_header'] == "1" ) ) {
+					if ( (isset($shopkeeper_theme_options['sticky_header'])) && ($shopkeeper_theme_options['sticky_header'] == "1" ) ) {
 						$header_sticky_class = "sticky_header";
 					}
 					
-					if ( (isset($houseofcoffee_theme_options['main_header_transparency'])) && ($houseofcoffee_theme_options['main_header_transparency'] == "1" ) ) {
+					if ( (isset($shopkeeper_theme_options['main_header_transparency'])) && ($shopkeeper_theme_options['main_header_transparency'] == "1" ) ) {
 						$header_transparency_class = "transparent_header";
 					}
 					
-					if ( (isset($houseofcoffee_theme_options['main_header_transparency_scheme'])) ) {
-						$transparency_scheme = $houseofcoffee_theme_options['main_header_transparency_scheme'];
+					if ( (isset($shopkeeper_theme_options['main_header_transparency_scheme'])) ) {
+						$transparency_scheme = $shopkeeper_theme_options['main_header_transparency_scheme'];
 					}
 					
 					$page_id = "";
@@ -132,6 +100,27 @@
 						$header_transparency_class = "";
 						$transparency_scheme = "";
 					}
+
+					if (class_exists('WooCommerce')) 
+                    {
+                        if ( is_product_category() && is_woocommerce() )
+                        {
+                        	if ( $shopkeeper_theme_options['shop_category_header_transparency_scheme'] == 'inherit' )
+                        	{
+                        		// do nothing, inherit
+                        	}
+                        	else if ( $shopkeeper_theme_options['shop_category_header_transparency_scheme'] == 'no_transparency' )
+                        	{
+                        		$header_transparency_class = "";
+								$transparency_scheme = "";
+                        	}
+                        	else 
+                        	{
+	                            $header_transparency_class = "transparent_header";
+	                            $transparency_scheme = $shopkeeper_theme_options['shop_category_header_transparency_scheme'];
+                        	}
+                        }
+                    }
 					
 					/*if ( is_shop() ) {
 						$header_transparency_class = "";
@@ -146,8 +135,8 @@
                         <?php
     
 						$header_max_width_style = "100%";
-						if ( (isset($houseofcoffee_theme_options['header_width'])) && ($houseofcoffee_theme_options['header_width'] == "custom") ) {
-							$header_max_width_style = $houseofcoffee_theme_options['header_max_width']."px";
+						if ( (isset($shopkeeper_theme_options['header_width'])) && ($shopkeeper_theme_options['header_width'] == "custom") ) {
+							$header_max_width_style = $shopkeeper_theme_options['header_max_width']."px";
 						} else {
 							$header_max_width_style = "100%";
 						}
@@ -156,23 +145,23 @@
                         
                         <div class="top-headers-wrapper">
 						
-                            <?php if ( (isset($houseofcoffee_theme_options['top_bar_switch'])) && ($houseofcoffee_theme_options['top_bar_switch'] == "1" ) ) : ?>                        
-                                <?php include_once('header-topbar.php'); ?>						
+                            <?php if ( (isset($shopkeeper_theme_options['top_bar_switch'])) && ($shopkeeper_theme_options['top_bar_switch'] == "1" ) ) : ?>                        
+                                <?php include(locate_template('header-topbar.php')); ?>						
                             <?php endif; ?>
                             
-                            <?php if ( isset($houseofcoffee_theme_options['main_header_layout']) ) : ?>
+                            <?php if ( isset($shopkeeper_theme_options['main_header_layout']) ) : ?>
 								
-								<?php if ( $houseofcoffee_theme_options['main_header_layout'] == "1" ) : ?>
-									<?php include_once('header-default.php'); ?>
-                                <?php elseif ( $houseofcoffee_theme_options['main_header_layout'] == "2" ) : ?>
-                                	<?php include_once('header-centered-2menus.php'); ?>
-                                <?php elseif ( $houseofcoffee_theme_options['main_header_layout'] == "3" ) : ?>
-                                	<?php include_once('header-centered-menu-under.php'); ?>
+								<?php if ( $shopkeeper_theme_options['main_header_layout'] == "1" ) : ?>
+									<?php include(locate_template('header-default.php')); ?>
+                                <?php elseif ( $shopkeeper_theme_options['main_header_layout'] == "2" ) : ?>
+                                	<?php include(locate_template('header-centered-2menus.php')); ?>
+                                <?php elseif ( $shopkeeper_theme_options['main_header_layout'] == "3" ) : ?>
+                                	<?php include(locate_template('header-centered-menu-under.php')); ?>
 								<?php endif; ?>
                                 
                             <?php else : ?>
                             
-                            	<?php include_once('header-default.php'); ?>
+                            	<?php include(locate_template('header-default.php')); ?>
                             
                             <?php endif; ?>
                         

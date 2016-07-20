@@ -33,6 +33,18 @@ a {
     transition: color .3s;
 }
 
+.entry-content a {	
+	-webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+.entry-content a:hover {
+	opacity: 0.7;
+}
+
 
 body {
 	-ms-word-wrap: break-word;
@@ -235,23 +247,63 @@ dd {
 	margin-bottom: 17px
 }
 
-.widget .recentcomments:before {
-	display: none;
+.widget.widget_recent_entries ul li a
+{
+	font-weight: bold;
+}
+
+.widget.widget_recent_entries ul li span
+{
+	font-size: 0.8125rem;
+}
+
+.widget.widget_recent_entries ul li:before {
+/*	display: none;*/
 	font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
-	content:"\f0e5";
+	content:"\f15c";
 	position:absolute;
-	top:0;
-	left:-20px;
+	top: 0;
+	left: 0px;
 	width:20px;
 	height:20px;
 }
 
+.widget.widget_recent_entries ul li:first-child:before
+{
+	top: 7px;
+}
+
+.widget .recentcomments,
+.widget.widget_recent_entries ul li
+{
+	padding-left: 20px;
+}
+
+.widget .recentcomments:before {
+/*	display: none;*/
+	font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+	content:"\f075";
+	position:absolute;
+	top: 0;
+	left: 0px;
+	width:20px;
+	height:20px;
+}
+
+.widget .recentcomments:first-child:before
+{
+	top: 7px;
+}
+
 .widget .recentcomments a {
-	display: block;
-	font-style:normal;
+	/*display: block;
+	font-style:normal;*/
 	display: block !important;
+	font-weight: bold;
 }
 
 .widget .cat-item {
@@ -348,6 +400,10 @@ dd {
 	border:0;
 }
 
+.widget_calendar table tr td {
+	border:0;
+}
+
 .widget_calendar table thead, 
 .widget_calendar table tfoot
 {
@@ -355,9 +411,9 @@ dd {
 }
 
 .widget_calendar caption {
-	font-size: 0.875rem;
+	font-size: 0.8125rem;
 	padding:0 0 10px 0;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: left;
 	text-transform: uppercase;
 }
@@ -382,7 +438,6 @@ dd {
 .widget_calendar table tr td
 {
 	text-align:left;
-	 padding: 0.1rem 1rem 0.1rem 0rem;
 }
 
 .widget_calendar table thead tr th, 
@@ -446,17 +501,17 @@ dd {
 }
 
 
-.widget_houseofcoffee_social_media .widget-title
+.widget_shopkeeper_social_media .widget-title
 {
 	margin-bottom: 16px;
 }
 
-.widget_houseofcoffee_social_media a
+.widget_shopkeeper_social_media a
 {
 	font-size: 0;
 }
 
-.widget_houseofcoffee_social_media a:before
+.widget_shopkeeper_social_media a:before
 {
 	display: inline-block;
 	font-size: 24px;
@@ -470,7 +525,7 @@ dd {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.widget_houseofcoffee_social_media a:first-of-type:before
+.widget_shopkeeper_social_media a:first-of-type:before
 {
 	/*padding-left: 0 !important;*/
 }
@@ -547,11 +602,15 @@ dd {
 	content:"\f1be";
 }
 
+.widget a.widget_connect_vk:before {
+	content:"\f189";
+}
+
 
 .widget_shopping_cart_content
 {
 	position: relative;
-	min-height: 87px;
+	/*min-height: 87px;*/
 	margin-top: 30px;
 }
 
@@ -645,7 +704,7 @@ dd {
 .woocommerce.widget_shopping_cart .total
 {
 	border-top: none;
-	padding: 20px 0 21px;
+	padding: 5px 0 25px;
 	margin: 0;
 }
 
@@ -789,7 +848,7 @@ dd {
 
 .shop_sidebar .widget ul .children
 {
-	margin: 4px 0px 7px 20px;
+	margin: 10px 0px 10px 20px;
 }
 
 /**********************************************************************************/
@@ -806,6 +865,12 @@ dd {
 
 .content-area {
 	padding:85px 0 0 0;
+}
+
+.page-template-default .entry-header.with_featured_img,
+.page-template-default .entry-header.with_featured_img
+{
+	margin-top: -85px;
 }
 
 ul,
@@ -827,7 +892,7 @@ ol {
 }
 
 .entry-meta {
-	margin:58px 0 0 0;
+	margin: 51px 0 0 0;
 	line-height:1.8em;
 	font-size:.85em;
 	/*font-style:italic;*/

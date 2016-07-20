@@ -60,7 +60,7 @@ function post_options_meta_box_save($post_id)
     if( !isset( $_POST['post_options_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['post_options_meta_box_nonce'], 'post_options_meta_box' ) ) return;
      
     // if our current user can't edit this post, bail
-    if( !current_user_can( 'edit_post' ) ) return;
+    if ( !current_user_can( 'edit_post', $post_id ) ) return;
 	
 	$chk = isset($_POST['post_featured_image_meta_box_check']) ? 'on' : 'off';
     update_post_meta( $post_id, 'post_featured_image_meta_box_check', $chk );

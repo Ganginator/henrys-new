@@ -137,7 +137,7 @@
 
 /* icon-wpb-ui-button */
 .wpb-content-layouts .wpb-layout-element-button .icon-wpb-ui-button,
-.wpb_vc_button2 .wpb_element_wrapper
+.wpb_vc_btn .wpb_element_wrapper
 {
     background-image: url(../images/visual_composer/button-2.png) !important;
 	background-position:0 0;
@@ -145,7 +145,7 @@
 
 /* icon-wpb-call-to-action */
 .wpb-content-layouts .wpb-layout-element-button .icon-wpb-call-to-action,
-.wpb_vc_cta_button .wpb_element_wrapper
+.wpb_vc_cta .wpb_element_wrapper
 {
     background-image: url(../images/visual_composer/call-to-action-2.png) !important;
 	background-position:0 0;
@@ -506,13 +506,13 @@
 
 /* LAYOUT */
 
-[data-element="product"],
+/*[data-element="product"],
 [data-element="add_to_cart"],
 [data-element="add_to_cart_url"],
 [data-element="product_page"]
 {
     display: none !important;
-}
+}*/
 
 .hide_in_vc_editor {
 	display:none;
@@ -754,4 +754,11 @@
 .wpb_el_type_icon .search {
 	max-width: 220px;
 	margin-left: 12px !important;
+}
+
+
+/* VC Separator bug fix */
+.vc_sep_holder
+{
+       display:block;
 }

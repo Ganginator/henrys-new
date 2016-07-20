@@ -24,7 +24,7 @@
 										<div class="entry-meta-attachment">
                                             <?php
                                                 $metadata = wp_get_attachment_metadata();
-                                                printf( __( 'Published <span class="entry-date"><time class="entry-date" datetime="%1$s">%2$s</time></span>. Size: <i class="fa fa-picture-o"></i> <a href="%3$s" title="Link to full-size image">%4$s &times; %5$s</a> in <i class="fa fa-folder-open"></i> <a href="%6$s" title="Return to %7$s" rel="gallery">%7$s</a>', 'houseofcoffee' ),
+                                                printf( __( 'Published <span class="entry-date"><time class="entry-date" datetime="%1$s">%2$s</time></span>. Size: <i class="fa fa-picture-o"></i> <a href="%3$s" title="Link to full-size image">%4$s &times; %5$s</a> in <i class="fa fa-folder-open"></i> <a href="%6$s" title="Return to %7$s" rel="gallery">%7$s</a>', 'shopkeeper' ),
                                                     esc_attr( get_the_date( 'c' ) ),
                                                     esc_html( get_the_date() ),
                                                     wp_get_attachment_url(),
@@ -39,11 +39,11 @@
 										<div class="row">
                                     
 											<div class="small-6 columns">
-												<div class="previous-image"><span class="previous-arrow">&lt; </span> <?php previous_image_link( false, __( 'Previous', 'houseofcoffee' ) ); ?></div>
+												<div class="previous-image"><span class="previous-arrow">&lt; </span> <?php previous_image_link( false, __( 'Previous', 'shopkeeper' ) ); ?></div>
 											</div><!-- .large-2 .columns -->
 											
 											<div class="small-6 columns">
-												<div class="next-image"><?php next_image_link( false, __( 'Next', 'houseofcoffee' ) ); ?> <span class="next-arrow"> &gt;</span></div>
+												<div class="next-image"><?php next_image_link( false, __( 'Next', 'shopkeeper' ) ); ?> <span class="next-arrow"> &gt;</span></div>
 											</div><!-- .large-2 .columns -->
 
 										</div><!-- .row -->

@@ -83,7 +83,7 @@
 	/*font-style:italic;*/
 	line-height:1.8em;
 	float:left;
-	margin-right:15px;
+	margin-right: 35px;
 }
 
 /* menu */
@@ -98,6 +98,11 @@
 
 #site-navigation-top-bar > ul {
     float: left;
+}
+
+#menu-top-bar-navigation li
+{
+	margin-left: 10px;
 }
 
 /* /menu */
@@ -115,19 +120,20 @@
 .site-social-icons ul {
 	list-style:none;
 	margin:0;
-	padding:0 0 0 20px;
+	padding:0 0 0 50px;
 	line-height:1.8em;
 	overflow: auto;
 	font-size:16px !important;
 }
 
 .site-social-icons ul li {
-	padding:0 8px;
+	padding: 0;
+	margin-left: 20px;
 	float:left;
 }
 
-.site-social-icons ul li:last-child {
-	padding:0 0 0 10px;
+.site-social-icons ul li:first-child {
+	margin-left: 0;
 }
 
 .site-social-icons ul li a i {

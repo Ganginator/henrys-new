@@ -30,12 +30,12 @@ vc_map(array(
    "params" 	=> array(
 		
 		array(
-			"type" 			=> "product_mod",
-			"holder" 		=> "div",
-			"heading" 		=> "Product",
-			"param_name" 	=> "id",
-			"class" 		=> "hide_in_vc_editor",
-			"admin_label" 	=> true,
+        "type" 			=> "product_mod",
+        "holder" 		=> "div",
+        "heading" 		=> "Product",
+        "param_name" 	=> "id",
+        "class" 		=> "hide_in_vc_editor",
+        "admin_label" 	=> true,
 		)
 		
    )

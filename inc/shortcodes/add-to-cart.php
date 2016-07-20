@@ -47,7 +47,7 @@ function shortcode_custom_add_to_cart($atts, $content = null) {
         <span class="add_to_cart_separator"></span>
         <?php
 		echo apply_filters( 'woocommerce_loop_add_to_cart_link',
-			sprintf( "<a style=\"color: $text_color; background-color: $bg_color;\" href=\"%s\" rel=\"nofollow\" data-product_id=\"%s\" data-product_sku=\"%s\" data-quantity=\"%s\" class=\"$class %s product_type_%s\"><span>%s</span></a>",
+			sprintf( "<a style=\"color: $text_color; background-color: $bg_color;\" href=\"%s\" rel=\"nofollow\" data-product_id=\"%s\" data-product_sku=\"%s\" data-quantity=\"%s\" class=\"$class %s product_type_%s ajax_add_to_cart\"><span>%s</span></a>",
 				esc_url( $product->add_to_cart_url() ),
 				esc_attr( $product->id ),
 				esc_attr( $product->get_sku() ),

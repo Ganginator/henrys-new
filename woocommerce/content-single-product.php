@@ -11,7 +11,7 @@
  
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	
-    global $post, $product, $houseofcoffee_theme_options;
+    global $post, $product, $shopkeeper_theme_options;
 
     //woocommerce_before_single_product
 	//nothing changed
@@ -57,34 +57,35 @@
 
 ?>
 
-<div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-	<?php if ( (isset($houseofcoffee_theme_options['header_width'])) && ($houseofcoffee_theme_options['header_width'] == "custom") ) : ?>
-    <div class="tob_bar_shop">
-		<div class="row">
-			<div class="medium-10 columns text-left">
-				<?php do_action('woocommerce_before_main_content_breadcrumb'); ?>
-			</div>
-			<div class="medium-2 columns text-right">
-			   <div class="product_navigation">
-				   <?php houseofcoffee_product_nav( 'nav-below' ); ?>
-			   </div>
+<?php if ( (isset($shopkeeper_theme_options['header_width'])) && ($shopkeeper_theme_options['header_width'] == "custom") ) : ?>
+<div class="tob_bar_shop">
+	<div class="row">
+		<div class="medium-10 columns text-left">
+			<?php do_action('woocommerce_before_main_content_breadcrumb'); ?>
+		</div>
+		<div class="medium-2 columns text-right">
+		   <div class="product_navigation">
+			   <?php shopkeeper_product_nav( 'nav-below' ); ?>
 		   </div>
 	   </div>
-	</div><!-- .top_bar_shop-->
-    <?php else : ?>
-    <div class="tob_bar_shop full_header">
-        <div class="tob_bar_shop_left_column text-left">
-            <?php do_action('woocommerce_before_main_content_breadcrumb'); ?>
-        </div>
-        <div class="tob_bar_shop_right_column text-right">
-           <div class="product_navigation">
-               <?php houseofcoffee_product_nav( 'nav-below' ); ?>
-           </div>
+   </div>
+</div><!-- .top_bar_shop-->
+<?php else : ?>
+<div class="tob_bar_shop full_header">
+    <div class="tob_bar_shop_left_column text-left">
+        <?php do_action('woocommerce_before_main_content_breadcrumb'); ?>
+    </div>
+    <div class="tob_bar_shop_right_column text-right">
+       <div class="product_navigation">
+           <?php shopkeeper_product_nav( 'nav-below' ); ?>
        </div>
-	</div><!-- .top_bar_shop-->
-	<?php endif; ?>
-    
+   </div>
+</div><!-- .top_bar_shop-->
+<?php endif; ?>
+
+<?php if ( !post_password_required() ) : ?>
+
+<div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="row">
         <div class="large-12 xlarge-10 xxlarge-9 large-centered columns">     
 			<div class="product_content_wrapper">
@@ -100,29 +101,21 @@
 					<div class="large-5 columns">
 						<div class="product-images-wrapper">
 							<?php				
-								if ( (isset($houseofcoffee_theme_options['catalog_mode'])) && ($houseofcoffee_theme_options['catalog_mode'] == 0) ) {
+								if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 0) ) {
 									do_action( 'woocommerce_before_single_product_summary_sale_flash' );
 								}
 								do_action( 'woocommerce_before_single_product_summary_product_images' );
 								do_action( 'woocommerce_before_single_product_summary' );
 							?>
 							
-							<?php if ( (isset($houseofcoffee_theme_options['catalog_mode'])) && ($houseofcoffee_theme_options['catalog_mode'] == 0) ) : ?>
+							<?php if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 0) ) : ?>
 								<?php if ( !$product->is_in_stock() ) : ?>            
                                     <div class="out_of_stock_badge_single <?php if (!$product->is_on_sale()) : ?>first_position<?php endif; ?>"><?php _e( 'Out of stock', 'woocommerce' ); ?></div>            
                                 <?php endif; ?>
                             <?php endif; ?>
 							
 							&nbsp;
-							<?php if($roast_level = get_field( 'roast_level' )): ?>
-								<?php if($roast_level != 'none'): ?>
-								<div class="roast <?php echo $roast_level; ?>">
-									<p><?php echo $roast_level; ?></p>
-								</div>
-								<?php endif; ?>
-							<?php endif; ?>
 						</div>
-						
 					</div><!-- .columns -->
 					
 					<?php
@@ -140,7 +133,7 @@
 							
 							 <div class="product_summary_top">
 								<?php
-									if ( !((isset($houseofcoffee_theme_options['review_tab'])) && ($houseofcoffee_theme_options['review_tab'] == "0" )) ) : 
+									if ( !((isset($shopkeeper_theme_options['review_tab'])) && ($shopkeeper_theme_options['review_tab'] == "0" )) ) : 
 									do_action( 'woocommerce_single_product_summary_single_rating' );
 									endif;	
 									
@@ -156,7 +149,7 @@
 							<?php
 								do_action( 'woocommerce_single_product_summary_single_price' );
 								do_action( 'woocommerce_single_product_summary_single_excerpt' );
-								if ( (isset($houseofcoffee_theme_options['catalog_mode'])) && ($houseofcoffee_theme_options['catalog_mode'] == 0) ) {
+								if ( (isset($shopkeeper_theme_options['catalog_mode'])) && ($shopkeeper_theme_options['catalog_mode'] == 0) ) {
 								do_action( 'woocommerce_single_product_summary_single_add_to_cart' );
 								}								
 								do_action( 'woocommerce_single_product_summary' );
@@ -173,31 +166,7 @@
 	   </div><!--large-9-->
     </div><!-- .row -->
 
-	<?php if ( (isset($houseofcoffee_theme_options['sharing_options'])) && ($houseofcoffee_theme_options['sharing_options'] == "1" ) ) : ?>
-    <div class="product_socials_wrapper show-share-text-on-mobiles">
-		<div class="row">
-			<div class="large-12 columns">
-				
-				<div class="share-product-text">
-					<?php _e('Share this product', 'woocommerce' ); ?>
-				</div><!--.share-product-text-->
-                
-                <?php
-					//Get the Thumbnail URL
-					$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), false, '' );
-				?>
-				
-				<div class="product_socials_wrapper_inner">
-					<a href="//www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank" class="social_media social_media_facebook"><i class="fa fa-facebook"></i></a>
-					<a href="//twitter.com/share?url=<?php the_permalink(); ?>" target="_blank" class="social_media social_media_twitter"><i class="fa fa-twitter"></i></a>
-					<a href="//plus.google.com/share?url=<?php the_permalink(); ?>" target="_blank" class="social_media social_media_googleplus"><i class="fa fa-google-plus"></i></a>
-					<a href="//pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&amp;media=<?php echo esc_url($src[0]) ?>&amp;description=<?php echo urlencode(get_the_title()); ?>" target="_blank" class="social_media social_media_pinterest"><i class="fa fa-pinterest"></i></a>
-				</div><!--.product_socials_wrapper_inner-->
-				
-			</div>
-		</div>
-	</div><!--.product_socials_wrapper-->
-    <?php endif; ?>
+    <?php do_action( 'getbowtied_woocommerce_before_single_product_summary_data_tabs' ); ?>
 	
 	<?php do_action( 'woocommerce_after_single_product_summary_data_tabs' ); ?>
 	
@@ -226,3 +195,13 @@
 		
     </div><!-- .columns -->
 </div><!-- .row -->		
+<?php else: ?>
+
+<div class="row">
+    <div class="large-9 large-centered columns">
+    <br/><br/><br/><br/>
+		<?php echo get_the_password_form(); ?>
+	</div>
+</div>
+
+<?php endif; ?>

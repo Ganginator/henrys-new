@@ -810,7 +810,6 @@ vc_map(array(
 			"heading" 		=> "Title",
 			"admin_label" 	=> false,
 			"param_name" 	=> "title",
-			"value" 		=> ""
 		),
 		
 		array(
@@ -824,7 +823,6 @@ vc_map(array(
 				"With Separator"	=> "with_separator",
 				"Without Separator"	=> "without_separator"
 			),
-			"std"			=> "with_separator",
 		),
 		
 		array(
@@ -849,7 +847,6 @@ vc_map(array(
 				"Left"		=> "left",
 				"Right"		=> "right"
 			),
-			"std"			=> "top",
 		),
 		
 		array(
@@ -864,7 +861,6 @@ vc_map(array(
 				"Outlined"	=> "outlined",
 				"Background Color"	=> "bg_color"
 			),
-			"std"			=> "normal",
 		),
 		
 		array(
@@ -895,7 +891,6 @@ vc_map(array(
 			"admin_label" 	=> true,
             "heading" 		=> "Description",
             "param_name" 	=> "content",
-            "value" 		=> "",
          ),
 		
 		array(
@@ -905,7 +900,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading" 		=> "Link Text",
 			"param_name" 	=> "link_name",
-			"value" 		=> ""
 		),
 		
 		array(
@@ -915,7 +909,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading" 		=> "Link URL",
 			"param_name" 	=> "link_url",
-			"value" 		=> ""
 		),
    )
    

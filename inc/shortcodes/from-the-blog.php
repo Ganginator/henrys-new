@@ -4,7 +4,7 @@
 function shortcode_from_the_blog($atts, $content = null) {
 	$sliderrandomid = rand();
 	extract(shortcode_atts(array(
-		"posts" => '2',
+		"posts" => '',
 		"category" => ''
 	), $atts));
 	ob_start();
@@ -78,7 +78,7 @@ function shortcode_from_the_blog($atts, $content = null) {
 						</a>
                         
                         <div class="from_the_blog_content">
-                            <div class="post_meta_archive"><?php houseofcoffee_entry_archives(); ?></div>                       
+                            <div class="post_meta_archive"><?php shopkeeper_entry_archives(); ?></div>                       
                         </div>
                         
                     </div>

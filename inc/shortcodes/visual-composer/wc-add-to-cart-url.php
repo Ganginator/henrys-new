@@ -19,7 +19,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "ID",
 			"param_name"	=> "id",
-			"value"			=> "",
 		),
 		
 		array(
@@ -29,7 +28,6 @@ vc_map(array(
 			"admin_label" 	=> true,
 			"heading"		=> "SKU",
 			"param_name"	=> "sku",
-			"value"			=> "",
 		),
 
    )

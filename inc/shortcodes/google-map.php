@@ -4,13 +4,13 @@
 function shortcode_google_map($atts, $content=null, $code) {
 	$randomid = rand();
 	extract(shortcode_atts(array(
-		'lat'  => '',
-        'long' => '',
+		'lat'  => '51.51526',
+        'long' => '-0.13218',
         'height' => '400px',
 		'color' => '#b39964',
 		'zoom' => '17',
 		'get_directions_button' => 'enabled',
-		'button_text' => __('Get Directions', 'houseofcoffee'),
+		'button_text' => __('Get Directions', 'shopkeeper'),
 		'control_elements' => 'enabled',
 	), $atts));
 	ob_start();	
@@ -20,7 +20,7 @@ function shortcode_google_map($atts, $content=null, $code) {
     
     function initialize() {
         var styles = {
-            'houseofcoffee':  [{
+            'shopkeeper':  [{
             "featureType": "administrative",
             "stylers": [
               { "visibility": "on" }
@@ -48,7 +48,7 @@ function shortcode_google_map($atts, $content=null, $code) {
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             //disableDefaultUI: true,
-            mapTypeId: 'houseofcoffee',
+            mapTypeId: 'shopkeeper',
             draggable: true,
             <?php if ($control_elements == "disabled") : ?>
 				zoomControl: false,
@@ -63,8 +63,8 @@ function shortcode_google_map($atts, $content=null, $code) {
             //disableDoubleClickZoom: false
         }
         var map = new google.maps.Map(document.getElementById("map_canvas_<?php echo esc_html($randomid); ?>"), myOptions);
-        var styledMapType = new google.maps.StyledMapType(styles['houseofcoffee'], {name: 'houseofcoffee'});
-        map.mapTypes.set('houseofcoffee', styledMapType);
+        var styledMapType = new google.maps.StyledMapType(styles['shopkeeper'], {name: 'shopkeeper'});
+        map.mapTypes.set('shopkeeper', styledMapType);
         
         var marker = new google.maps.Marker({
             position: myLatlng, 
@@ -92,4 +92,4 @@ function shortcode_google_map($atts, $content=null, $code) {
 	return $content;
 }
 
-add_shortcode("google_map", "shortcode_google_map");
+// add_shortcode("google_map", "shortcode_google_map");

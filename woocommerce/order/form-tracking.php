@@ -28,7 +28,7 @@ global $woocommerce, $post;
 	<div class="large-10 large-centered columns">
 		<div class="track-order-container">
 			
-			<p class="track-order-description"><?php _e( 'To track your order please enter your Order ID in the box below and press return. This was given to you on your receipt and in the confirmation email you should have received.', 'woocommerce' ); ?></p>
+			<p class="track-order-description"><?php _e( 'To track your order please enter your Order ID in the box below and press the "Track" button. This was given to you on your receipt and in the confirmation email you should have received.', 'woocommerce' ); ?></p>
 		
 			<form action="<?php echo esc_url( get_permalink( $post->ID ) ); ?>" method="post" class="track_order_form custom_border">
 			 

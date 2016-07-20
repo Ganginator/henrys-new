@@ -2,12 +2,12 @@
 	
 	if (class_exists('WooCommerce')) {
 
-	function houseofcoffee_product_categories( $atts ) {
+	function shopkeeper_product_categories( $atts ) {
 	
 			extract( shortcode_atts( array(
 				'number'     => null,
 				'orderby'    => 'name',
-				'order'      => 'ASC',
+				'order'      => 'DESC',
 				'hide_empty' => 1,
 				'parent'     => ''
 			), $atts ) );
@@ -118,6 +118,6 @@
 			return '<div class="row"><div class="categories_grid">' . ob_get_clean() . '</div></div>';
 	}
 	
-	add_shortcode("product_categories_grid", "houseofcoffee_product_categories");
+	add_shortcode("product_categories_grid", "shopkeeper_product_categories");
 
 }

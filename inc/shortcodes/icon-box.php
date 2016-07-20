@@ -9,7 +9,7 @@ function icon_box_shortcode($params = array(), $content = null) {
 		'icon_color' => '#000',
 		'icon_bg_color' => '#ffffff',
 		'title' => '',
-		'separator' => '',
+		'separator' => 'with_separator',
 		'link_name' => '',
 		'link_url' => ''
 	), $params));

@@ -1,6 +1,6 @@
-<?php global $houseofcoffee_theme_options; ?>
+<?php global $shopkeeper_theme_options; ?>
 
-<?php if ( (isset($houseofcoffee_theme_options['related_products'])) && ($houseofcoffee_theme_options['related_products'] == "1" ) ) : ?>
+<?php if ( (isset($shopkeeper_theme_options['related_products'])) && ($shopkeeper_theme_options['related_products'] == "1" ) ) : ?>
 
 <?php
 /**

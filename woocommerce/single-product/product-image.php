@@ -9,25 +9,22 @@
 
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	
-	global $post, $woocommerce, $product, $houseofcoffee_theme_options;
+	global $post, $woocommerce, $product, $shopkeeper_theme_options;
 
     $modal_class = "";
 	$zoom_class = "";
 	$plus_button = "";
-	$linked_image = false;
 	
 	if (get_option('woocommerce_enable_lightbox') == "yes") {
         $modal_class = "fresco zoom";
 		$zoom_class = "";
 		$plus_button = '<span class="product_image_zoom_button show-for-medium-up"><i class="fa fa-plus"></i></span>';
-		$linked_image = true;
     }
 	
-	if ( (isset($houseofcoffee_theme_options['product_gallery_zoom'])) && ($houseofcoffee_theme_options['product_gallery_zoom'] == "1" ) ) {
+	if ( (isset($shopkeeper_theme_options['product_gallery_zoom'])) && ($shopkeeper_theme_options['product_gallery_zoom'] == "1" ) ) {
 		$modal_class = "zoom";
 		$zoom_class = "easyzoom el_zoom";
 		$plus_button = "";
-		$linked_image = true;
 	}	
 	
 
@@ -66,20 +63,12 @@ echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<div clas
 			
 			<div class="<?php echo $zoom_class; ?>">
                 
-				<?php if ($linked_image == true) : ?>
-                	<a data-fresco-group="product-gallery" data-fresco-options="fit: 'width'" class="<?php echo $modal_class; ?>" href="<?php echo esc_url($image_link); ?>">
-                <?php else : ?>
-                	<span>
-                <?php endif; ?>
-                    
-						<?php echo $image; ?>
-                        <?php echo $plus_button; ?>
-                    
-                <?php if ($linked_image == true) : ?>
-                	</a>
-                <?php else : ?>
-                	</span>
-                <?php endif; ?>
+            	<a data-fresco-group="product-gallery" data-fresco-options="fit: 'width'" class="<?php echo $modal_class; ?>" href="<?php echo esc_url($image_link); ?>">
+                
+					<?php echo $image; ?>
+                    <?php echo $plus_button; ?>
+                
+            	</a>
            
             </div>
             
@@ -109,20 +98,12 @@ echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<div clas
 								
 					<div class="<?php echo $zoom_class; ?>">
                         
-						<?php if ($linked_image == true) : ?>
-                            <a data-fresco-group="product-gallery" data-fresco-options="fit: 'width'" class="<?php echo $modal_class; ?>" href="<?php echo esc_url($image_link); ?>">
-                        <?php else : ?>
-                            <span>
-                        <?php endif; ?>
-                        
-                                <img src="<?php echo esc_url($image_src[0]); ?>" data-src="<?php echo esc_url($image_data_src[0]); ?>" class="lazyOwl" alt="<?php echo esc_html($image_title); ?>">
-                                <?php echo $plus_button; ?>
-                        
-						<?php if ($linked_image == true) : ?>
-                            </a>
-                        <?php else : ?>
-                            </span>
-                        <?php endif; ?>
+                        <a data-fresco-group="product-gallery" data-fresco-options="fit: 'width'" class="<?php echo $modal_class; ?>" href="<?php echo esc_url($image_link); ?>">
+                    
+                            <img src="<?php echo esc_url($image_src[0]); ?>" data-src="<?php echo esc_url($image_data_src[0]); ?>" class="lazyOwl" alt="<?php echo esc_html($image_title); ?>">
+                            <?php echo $plus_button; ?>
+                    
+                        </a>
                         
                     </div>
                     

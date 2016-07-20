@@ -6,7 +6,7 @@ Template Name: Boxed Layout
 
 <?php
 	
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 	
 	$page_id = "";
 	if ( is_single() || is_page() ) {

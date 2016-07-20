@@ -1,6 +1,6 @@
 <?php
 	
-	global $houseofcoffee_theme_options;
+	global $shopkeeper_theme_options;
 	
 	$page_id = "";
 	if ( is_single() || is_page() ) {
@@ -12,12 +12,13 @@
     $page_header_src = "";
 
     if (has_post_thumbnail()) $page_header_src = wp_get_attachment_url( get_post_thumbnail_id( $page_id ) );
+
+    $page_title_option = "on";
 	
 	if (get_post_meta( $page_id, 'page_title_meta_box_check', true )) {
 		$page_title_option = get_post_meta( $page_id, 'page_title_meta_box_check', true );
-	} else {
-		$page_title_option = "on";
 	}
+    
 ?>
 
 <?php get_header(); ?>
@@ -54,7 +55,7 @@
                 <?php else: ?>    
                 <div class="clearfix"></div>
                 <footer class="entry-meta">   
-                    <?php // edit_post_link( __( 'Edit', 'houseofcoffee' ), '<div class="edit-link"><i class="fa fa-pencil"></i> ', '</div>' );  ?>
+                    <?php // edit_post_link( __( 'Edit', 'shopkeeper' ), '<div class="edit-link"><i class="fa fa-pencil"></i> ', '</div>' );  ?>
                 </footer><!-- .entry-meta -->
                 <?php endif; ?>
 
